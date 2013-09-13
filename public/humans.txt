@@ -3,10 +3,10 @@
 
 
 /* TEAM */
-  <your title>: <your name>
-  Site:
-  Twitter:
-  Location:
+  lead programmer: stephan.com
+  Site: http://stephan.com
+  Twitter: @stephancom
+  Location: Black Rock City, NV
 
 /* THANKS */
   Daniel Kehoe (@rails_apps) for the RailsApps project
