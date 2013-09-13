@@ -20,7 +20,6 @@ gem 'zurb-foundation'
 # yet more
 gem 'high_voltage'
 gem 'responders'
-gem 'strong_parameters'
 gem 'squeel'
 gem 'stateflow'
 gem 'gritter'
