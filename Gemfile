@@ -40,3 +40,4 @@ group :test do
   gem 'email_spec'
   gem 'turnip', '>= 1.1.0'
 end
+gem 'rails_12factor', group: :production
