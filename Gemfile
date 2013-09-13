@@ -16,20 +16,29 @@ gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
 gem 'slim'
 gem 'zurb-foundation'
+
+# yet more
+gem 'high_voltage'
+gem 'responders'
+gem 'strong_parameters'
+gem 'squeel'
+gem 'stateflow'
+gem 'gritter'
+gem 'carrierwave'
+gem 'remotipart'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-rspec'
-  gem 'haml-rails'
-  gem 'haml2slim'
-  gem 'html2haml'
   gem 'hub', :require=>nil
   gem 'quiet_assets'
   gem 'rb-fchange', :require=>false
   gem 'rb-fsevent', :require=>false
   gem 'rb-inotify', :require=>false
+  gem 'letter_opener'
 end
 group :development, :test do
   gem 'factory_girl_rails'
@@ -39,5 +48,6 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
   gem 'turnip', '>= 1.1.0'
+  gem 'simplecov', :require=>false
 end
 gem 'rails_12factor', group: :production
