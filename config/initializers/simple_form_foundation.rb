@@ -1,14 +1,17 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
-  config.wrappers :foundation, class: :input, hint_class: :field_with_hint, error_class: :error do |b|
+  config.wrappers :foundation, class: "input row", hint_class: :field_with_hint, error_class: :error do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label_input
+    # b.use :label_input
     b.use :error, wrap_with: { tag: :small }
+
+    b.use :label, wrap_with: { tag: :div, class: "small-3 columns"}
+    b.use :input, wrap_with: { tag: :div, class: "small-9 columns"}
 
     # Uncomment the following line to enable hints. The line is commented out by default since Foundation
     # does't provide styles for hints. You will need to provide your own CSS styles for hints.
@@ -17,6 +20,8 @@ SimpleForm.setup do |config|
 
   # CSS class for buttons
   config.button_class = 'button'
+
+  config.label_class = 'right'
 
   # CSS class to add for error notification helper.
   config.error_notification_class = 'alert-box alert'
