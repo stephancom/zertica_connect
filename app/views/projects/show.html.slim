@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Title:
+  = @project.title
+p
+  strong State:
+  = @project.state
+p
+  strong User:
+  = @project.user.name
+p
+  strong Spec:
+  = @project.spec
+p
+  strong Deadline:
+  = @project.deadline
+
+= link_to 'Edit', edit_project_path(@project)
+'|
+= link_to 'Back', projects_path

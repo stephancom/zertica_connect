@@ -14,7 +14,6 @@ gem 'figaro'
 gem 'pg'
 gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
-gem 'slim'
 gem 'zurb-foundation'
 
 # yet more
@@ -25,6 +24,8 @@ gem 'stateflow'
 gem 'gritter'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'slim-rails'
+gem "font-awesome-rails"
 
 group :development do
   gem 'better_errors'
