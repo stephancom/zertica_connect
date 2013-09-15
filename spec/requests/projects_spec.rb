@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'requests_helper'
 
 describe "Projects" do
   describe "GET /projects" do
