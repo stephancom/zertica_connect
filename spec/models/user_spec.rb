@@ -41,6 +41,10 @@ describe User do
 
   end
 
+  it "should have a name" do
+    build(:user).should respond_to :name
+  end
+
   describe "password validations" do
 
     it "should require a password" do
