@@ -15,7 +15,7 @@ table
   - @projects.each do |project|
     tr
       - if current_user.has_role? :admin
-        td = project.user.name
+        td = link_to_if can?(:show, project.user), project.user.name, project.user
       td = project.title
       td = project.state
       td = project.spec

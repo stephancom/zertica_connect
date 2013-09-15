@@ -1,20 +1,14 @@
 p#notice = notice
 
-p
-  strong Title:
-  = @project.title
-p
-  strong State:
-  = @project.state
-p
-  strong User:
-  = @project.user.name
-p
-  strong Spec:
-  = @project.spec
-p
-  strong Deadline:
-  = @project.deadline
+h1= @project.title
+
+h2 status: #{@project.state}
+
+h3 client: #{link_to_if can?(:show, @project.user), @project.user.name, @project.user}
+
+h3 Deadline: #{@project.deadline}
+
+= simple_format @project.spec
 
 = link_to 'Edit', edit_project_path(@project)
 '|
