@@ -3,6 +3,9 @@ require 'spec_helper'
 describe "projects/index" do
   before(:each) do
     assign(:projects, [create(:project), create(:project)])
+    @ability = Object.new
+    @ability.extend(CanCan::Ability)
+    controller.stub(:current_ability) { @ability }
   end
 
   it "renders a list of projects" do
