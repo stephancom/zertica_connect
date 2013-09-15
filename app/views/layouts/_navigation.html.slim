@@ -10,11 +10,11 @@ nav.top-bar
       - if user_signed_in?
         li= link_to 'Projects', projects_path if can? :index, Project
         li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
-      - else
-        li= link_to 'Login', new_user_session_path
-      - if user_signed_in?
         li= link_to 'Edit account', edit_user_registration_path
         - if current_user.has_role? :admin
           li= link_to 'Admin', users_path
+        li
+          a= "Welcome #{current_user.name}"
       - else
+        li= link_to 'Login', new_user_session_path
         li= link_to 'Sign up', new_user_registration_path
