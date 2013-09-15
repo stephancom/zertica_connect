@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index
-    @users = User.all
-  end
+	def index
+		redirect_to projects_path if current_user
+	end
 end
