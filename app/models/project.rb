@@ -4,6 +4,7 @@ class Project < ActiveRecord::Base
 	belongs_to :user
 
 	validates :user, presence: true
+	validates :title, presence: true
 
 	#     _        _                       _    _          
 	#  __| |_ __ _| |_ ___   _ __  __ _ __| |_ (_)_ _  ___ 
