@@ -12,4 +12,12 @@ module ApplicationHelper
     html.html_safe
   end
 
+  def awesome(icon, tip = nil)
+    icon = "icon-#{icon}"
+    if tip
+      content_tag(:i, '', class: icon, data_tooltip: '', title: tip)
+    else
+      content_tag(:i, '', class: icon)
+    end
+  end
 end

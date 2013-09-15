@@ -12,7 +12,7 @@ describe "projects/edit" do
     assert_select "form[action=?][method=?]", project_path(@project), "post" do
       assert_select "input#project_title[name=?]", "project[title]"
       # assert_select "input#project_state[name=?]", false
-      assert_select "input#project_user[name=?]", "project[user]"
+      assert_select "select#project_user[name=?]", "project[user]"
       assert_select "textarea#project_spec[name=?]", "project[spec]"
     end
   end

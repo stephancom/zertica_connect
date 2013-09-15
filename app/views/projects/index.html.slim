@@ -2,9 +2,10 @@ h1 Listing projects
 
 table
   tr
+    - if current_user.has_role? :admin
+      th Client
     th Title
     th State
-    th User
     th Spec
     th Deadline
     th
@@ -13,14 +14,15 @@ table
 
   - @projects.each do |project|
     tr
+      - if current_user.has_role? :admin
+        td = project.user.name
       td = project.title
       td = project.state
-      td = project.user.name
       td = project.spec
       td = project.deadline
-      td = link_to 'Show', project
-      td = link_to 'Edit', edit_project_path(project)
-      td = link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete
+      td = link_to awesome('search', 'Show'), project if can? :show, project
+      td = link_to awesome('pencil', 'Edit'), edit_project_path(project) if can? :edit, project
+      td = link_to awesome('trash', 'Destroy'), project, :confirm => 'Are you sure?', :method => :delete if can? :destroy, project
 
 br
 
