@@ -26,6 +26,7 @@ gem 'carrierwave'
 gem 'remotipart'
 gem 'slim-rails'
 gem "font-awesome-rails"
+gem 'ckeditor_rails'
 
 group :development do
   gem 'better_errors'
