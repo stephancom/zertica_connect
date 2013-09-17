@@ -1,7 +1,7 @@
 = simple_form_for @project do |f|
   = f.error_notification
   = f.input :title
-  = f.input :spec, input_html: {class: :ckeditor}
+  = f.input :spec
   = f.input :deadline
   .row
     .small-9.columns.small-offset-3
