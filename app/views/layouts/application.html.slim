@@ -10,7 +10,7 @@ html
         = yield(:head)
   body class=("#{controller_name} #{action_name}") 
     = render 'layouts/navigation'
-    header.row= render 'layouts/messages'
+    header.row= render 'layouts/flashes'
     section.main.row
       .large-12.columns= yield
     footer.row
