@@ -1,0 +1,5 @@
+dt
+	- if message.bookmark
+		i.icon-star
+	= message.user ? message.user.name : 'system'
+dd= message.body

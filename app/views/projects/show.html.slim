@@ -10,6 +10,12 @@ h3 Deadline: #{@project.deadline}
 
 p= @project.spec
 
+h4 Messages
+
+dl= render @project.messages
+
+= render "messages/form"
+
 = link_to 'Edit', edit_project_path(@project)
 '|
 = link_to 'Back', projects_path

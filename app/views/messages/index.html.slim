@@ -1,0 +1,23 @@
+h1 Listing messages for project #{@project.title}
+
+p= link_to "back to project", @project
+
+table
+  tr
+    th Body
+    th Project
+    th User
+    th Bookmark
+    th
+
+  - @messages.each do |message|
+    tr
+      td = message.body
+      td = message.project.title
+      td = message.user.name if message.user
+      td = message.bookmark
+      td = link_to 'Show', [@project, message]
+
+br
+
+= link_to 'New Message', new_project_message_path(@project), class: :button if can? :create, @project.messages.new

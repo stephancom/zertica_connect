@@ -1,0 +1,16 @@
+p#notice = notice
+
+p
+  strong Body:
+  = @message.body
+p
+  strong Project:
+  = @message.project.title
+p
+  strong User:
+  = @message.user.name if @message.user
+p
+  strong Bookmark:
+  = @message.bookmark
+
+= link_to 'Back', project_messages_path(@project)

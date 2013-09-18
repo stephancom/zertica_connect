@@ -1,0 +1,7 @@
+= simple_form_for [@project, @message] do |f|
+  = f.error_notification
+  = f.input :bookmark
+  = f.input :body
+  .row
+    .small-9.columns.small-offset-3
+      = f.button :submit, class: :right
