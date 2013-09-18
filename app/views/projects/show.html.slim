@@ -13,7 +13,7 @@
 			| client:
 			= link_to_if can?(:show, @project.user), @project.user.name, @project.user
 .row
-	.columns.small-12= simple_format @project.spec
+	.columns.small-12= simple_format h(@project.spec)
 
 .panel Messages
 
