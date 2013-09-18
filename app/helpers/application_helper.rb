@@ -20,4 +20,9 @@ module ApplicationHelper
       content_tag(:i, '', class: icon)
     end
   end
+
+  # https://github.com/slim-template/slim/issues/151#issuecomment-15882033 
+  def dom_attrs(record)
+    { id: dom_id(record), class: dom_class(record) }
+  end
 end

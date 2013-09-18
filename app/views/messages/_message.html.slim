@@ -1,5 +1,5 @@
 - unless message.new_record?
-	.row
+	.row *message_attrs(message)
 		.small-1.columns
 			- if message.bookmark
 				i.icon-star
