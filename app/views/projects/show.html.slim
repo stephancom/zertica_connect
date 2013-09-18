@@ -17,10 +17,11 @@
 
 .panel Messages
 
-.columns.small-9
-	= render @project.messages
-	= render "messages/form"
-.columns.small-3
-	h4 bookmarks
-	= render @project.messages.bookmarked
-
+.row
+	.columns.small-9
+		= render @project.messages
+	.columns.small-3
+		h4 bookmarks
+		= render @project.messages.bookmarked
+.row
+	.columns.small-9= render "messages/form"
