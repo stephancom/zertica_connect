@@ -1,5 +1,18 @@
-dt
-	- if message.bookmark
-		i.icon-star
-	= message.user ? message.user.name : 'system'
-dd= message.body
+- unless message.new_record?
+	.row
+		.small-1.columns
+			- if message.bookmark
+				i.icon-star
+			- else
+				i.icon-star-empty
+		- if message.user
+			- if message.user == current_user
+				.small-9.columns
+					.right= message.body
+				.small-2.columns me
+			- else
+				.small-3.columns= message.user.name
+				.small-8.columns= message.body.columns.system
+		- else
+			.small-11.columns
+				.panel.callout.radius= message.body

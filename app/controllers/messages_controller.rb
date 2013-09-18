@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
     # @message = Message.new(params[:message])
     @message.user = current_user
     flash[:notice] = 'Message was successfully created.' if @message.save
-    respond_with(@project, @message)
+    respond_with(@project)
   end
 
   # def destroy
