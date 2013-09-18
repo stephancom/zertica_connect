@@ -1,6 +1,6 @@
 module MessagesHelper
 	def sender_class(message)
-		case message.user
+		case message.sender
 		when nil
 			:system
 		when current_user

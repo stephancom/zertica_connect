@@ -1,11 +1,12 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource :project
-  load_and_authorize_resource :message, through: [:project, :current_user]
+  load_and_authorize_resource # through: :user
 
-  # def index
-  #   @messages = Message.all
-  #   respond_with(@messages)
-  # end
+  before_filter :new_message, only: :index
+
+  def index
+    @messages = user.messages
+    respond_with(@messages)
+  end
 
   # def show
   #   @message = Message.find(params[:id])
@@ -19,9 +20,16 @@ class MessagesController < ApplicationController
 
   def create
     # @message = Message.new(params[:message])
-    @message.user = current_user
+    @message.user = user
+    @message.sender = current_user
     flash[:notice] = 'Message was successfully created.' if @message.save
-    respond_with(@project)
+
+    if current_user.has_role? :admin
+      respond_with user
+    else
+      redirect_to messages_path
+    end
+    # respond_with(user || @messages)
   end
 
   # def destroy
@@ -31,6 +39,15 @@ class MessagesController < ApplicationController
   # end
 
   private
+
+  def user
+    @user ||= User.find(params[:user_id]) if params.has_key? :user_id
+    @user ||= current_user
+  end
+
+  def new_message
+    @message = user.messages.new
+  end
 
   def message_params
     params[:message].permit(:body, :bookmark)

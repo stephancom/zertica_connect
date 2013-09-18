@@ -14,14 +14,3 @@
 			= link_to_if can?(:show, @project.user), @project.user.name, @project.user
 .row
 	.columns.small-12= simple_format h(@project.spec)
-
-.panel Messages
-
-.row
-	.columns.small-9
-		= render @project.messages
-	.columns.small-3
-		h4 bookmarks
-		= render @project.messages.bookmarked
-.row
-	.columns.small-9= render "messages/form"

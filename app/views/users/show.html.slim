@@ -1,5 +1,20 @@
 h1 #{@user.name}
 
-h2 Projects:
+.panel Projects:
+
+- if @user.projects.empty?
+	h2 No projects
 
 ul= render @user.projects
+
+
+.panel Messages
+
+.row
+	.columns.small-9
+		= render @user.messages
+	.columns.small-3
+		h4 bookmarks
+		= render @user.messages.bookmarked
+.row
+	.columns.small-9= render "messages/form"
