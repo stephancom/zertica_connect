@@ -4,5 +4,6 @@ class Message < ActiveRecord::Base
 
   validates :body, presence: true
   # validate user owns project or is admin?
-  
+
+  scope :bookmarked, -> { where(bookmark: true) }
 end
