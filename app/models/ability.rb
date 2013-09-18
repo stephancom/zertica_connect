@@ -11,8 +11,7 @@ class Ability
         # any logged in user can
         unless user.new_record?
             can [:show, :update], User, :id => user.id  # user can always see their own account
-            can :manage, Project, :user_id => user.id
-            can :manage, Message, :project => {:user_id => user.id}
+            can :manage, [Project, Message], :user_id => user.id
         end
 
     # Define abilities for the passed in user here. For example:

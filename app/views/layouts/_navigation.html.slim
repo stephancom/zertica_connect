@@ -11,6 +11,7 @@ nav.top-bar
         - if can? :index, User
           li= link_to 'Users', users_path
         li= link_to 'Projects', projects_path if can? :index, Project
+        li= link_to 'Messages', messages_path if can? :index, Message
         li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
         li= link_to 'Edit account', edit_user_registration_path
         li

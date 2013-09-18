@@ -4,13 +4,16 @@ p
   strong Body:
   = @message.body
 p
-  strong Project:
-  = @message.project.title
-p
   strong User:
-  = @message.user.name if @message.user
+  = @message.user.name
+p
+  strong Sender:
+  = @message.sender.name if @message.sender
 p
   strong Bookmark:
   = @message.bookmark
 
-= link_to 'Back', project_messages_path(@project)
+- if @user
+	= link_to 'Back', user_messages_path(@user)
+- else
+	= link_to 'Back', messages_path

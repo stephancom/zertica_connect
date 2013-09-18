@@ -3,8 +3,8 @@
 FactoryGirl.define do
   factory :message do
     body "MyText"
-    project nil
-    user nil
+    user
+    sender nil
     bookmark false
   end
 end

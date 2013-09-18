@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 20130918000352) do
 
   create_table "messages", force: true do |t|
     t.text     "body",                       null: false
-    t.integer  "project_id",                 null: false
-    t.integer  "user_id"
+    t.integer  "user_id",                    null: false
+    t.integer  "sender_id"
     t.boolean  "bookmark",   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "messages", ["project_id"], name: "index_messages_on_project_id", using: :btree
+  add_index "messages", ["sender_id"], name: "index_messages_on_sender_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "projects", force: true do |t|

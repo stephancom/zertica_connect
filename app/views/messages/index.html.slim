@@ -1,23 +1,15 @@
-h1 Listing messages for project #{@project.title}
+- unless @user == current_user
+  h1 Listing messages for user #{@user.name}
 
-p= link_to "back to project", @project
+  p= link_to "back to #{@user.name}", @user
 
-table
-  tr
-    th Body
-    th Project
-    th User
-    th Bookmark
-    th
+.panel Messages
 
-  - @messages.each do |message|
-    tr
-      td = message.body
-      td = message.project.title
-      td = message.user.name if message.user
-      td = message.bookmark
-      td = link_to 'Show', [@project, message]
-
-br
-
-= link_to 'New Message', new_project_message_path(@project), class: :button if can? :create, @project.messages.new
+.row
+  .columns.small-9
+    = render @messages
+  .columns.small-3
+    h4 bookmarks
+    = render @messages.bookmarked
+.row
+  .columns.small-9= render "messages/form"
