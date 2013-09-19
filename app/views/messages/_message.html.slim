@@ -2,17 +2,17 @@
 	.row *message_attrs(message)
 		.small-1.columns
 			- if message.bookmark
-				i.icon-star
+				i.icon-star.icon-2x
 			- else
-				i.icon-star-empty
+				i.icon-star-empty.icon-2x
 		- if message.sender
 			- if message.sender == current_user
-				.small-9.columns.message-text
+				.small-10.columns.message-text
 					.bubble.bubble--alt= message.body
-				.small-2.columns me
+				.small-1.columns me
 			- else
-				.small-3.columns= message.sender.name
-				.small-8.columns.message-text
+				.small-1.columns= message.sender.name
+				.small-10.columns.message-text
 					.bubble= message.body
 		- else
 			.small-11.columns
