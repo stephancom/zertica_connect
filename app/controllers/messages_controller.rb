@@ -39,9 +39,7 @@ class MessagesController < ApplicationController
   # end
 
   def bookmark
-    @message.toggle(:bookmark)
-    @message.save!
-    logger.debug "Toggle #{@message.inspect}"
+    @message.toggle!(:bookmark)
     if current_user.has_role? :admin
       respond_with @message.user
     else
