@@ -8,15 +8,17 @@
 					i.icon-star-empty.icon-2x
 		- if message.sender
 			- if message.sender == @message_viewer
-				.small-10.columns.message-text
-					p.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %B %e")
+				.small-11.columns.message-text
 					.bubble.bubble--alt= message.body
-				.small-1.columns me
+					p.speaker 
+						span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %B %e")
+						| me
 			- else
-				.small-1.columns= message.sender.name
-				.small-10.columns.message-text
-					p.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")
+				.small-11.columns.message-text
 					.bubble= message.body
+					p.speaker
+						= message.sender.name
+						span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")
 		- else
 			.small-11.columns
 				.panel.callout.radius= message.body
