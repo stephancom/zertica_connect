@@ -11,7 +11,7 @@ ul= render @user.projects
 .panel Messages
 
 .row
-	.columns.small-9
+	.columns.small-9 id=dom_id(@user, :message_panel)
 		= render @user.messages
 	.columns.small-3
 		h4 bookmarks

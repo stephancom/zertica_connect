@@ -1,4 +1,4 @@
-= simple_form_for [@user, @message] do |f|
+= simple_form_for [@user, @message], :remote => true do |f|
   = f.error_notification
   = f.input :body
   = f.input :bookmark

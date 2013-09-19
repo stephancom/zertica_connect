@@ -1,13 +1,13 @@
 - unless message.new_record?
 	.row *message_attrs(message)
 		.small-1.columns
-			a data={method: :patch} href=bookmark_message_path(message) class=:bookmark
+			a data={method: :patch, remote: true} href=bookmark_message_path(message) class=:bookmark
 				- if message.bookmark
 					i.icon-star.icon-2x
 				- else
 					i.icon-star-empty.icon-2x
 		- if message.sender
-			- if message.sender == current_user
+			- if message.sender == @message_viewer
 				.small-10.columns.message-text
 					p.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %B %e")
 					.bubble.bubble--alt= message.body

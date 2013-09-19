@@ -3,7 +3,7 @@ module MessagesHelper
 		case message.sender
 		when nil
 			:system
-		when current_user
+		when @message_viewer
 			:myself
 		else
 			:staff
