@@ -7,12 +7,13 @@
 				i.icon-star-empty
 		- if message.sender
 			- if message.sender == current_user
-				.small-9.columns
-					.right= message.body
+				.small-9.columns.message-text
+					.bubble.bubble--alt= message.body
 				.small-2.columns me
 			- else
 				.small-3.columns= message.sender.name
-				.small-8.columns= message.body
+				.small-8.columns.message-text
+					.bubble= message.body
 		- else
 			.small-11.columns
 				.panel.callout.radius= message.body
