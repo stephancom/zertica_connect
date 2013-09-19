@@ -1,10 +1,11 @@
 - unless message.new_record?
 	.row *message_attrs(message)
 		.small-1.columns
-			- if message.bookmark
-				i.icon-star.icon-2x
-			- else
-				i.icon-star-empty.icon-2x
+			a data={method: :patch} href=bookmark_message_path(message) class=:bookmark
+				- if message.bookmark
+					i.icon-star.icon-2x
+				- else
+					i.icon-star-empty.icon-2x
 		- if message.sender
 			- if message.sender == current_user
 				.small-10.columns.message-text

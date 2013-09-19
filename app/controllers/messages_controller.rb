@@ -25,7 +25,7 @@ class MessagesController < ApplicationController
     flash[:notice] = 'Message was successfully created.' if @message.save
 
     if current_user.has_role? :admin
-      respond_with user
+      respond_with @message.user
     else
       redirect_to messages_path
     end
@@ -37,6 +37,17 @@ class MessagesController < ApplicationController
   #   @message.destroy
   #   respond_with(@message)
   # end
+
+  def bookmark
+    @message.toggle(:bookmark)
+    @message.save!
+    logger.debug "Toggle #{@message.inspect}"
+    if current_user.has_role? :admin
+      respond_with @message.user
+    else
+      redirect_to messages_path
+    end
+  end
 
   private
 
