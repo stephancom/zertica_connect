@@ -17,4 +17,12 @@ class ApplicationController < ActionController::Base
 	  method = "#{resource}_params"
 	  params[resource] &&= send(method) if respond_to?(method, true)
 	end
+
+	before_filter :set_message_viewer
+
+private
+
+	def set_message_viewer
+		@message_viewer = current_user
+	end
 end

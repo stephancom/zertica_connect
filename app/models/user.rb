@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
 	has_many :projects
 	has_many :messages
+
+	def pusher_key
+	"user_#{id}"
+	end
 end
