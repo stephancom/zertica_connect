@@ -1,7 +1,6 @@
-= simple_form_for [@user, @message], :remote => true do |f|
+= minimal_form_for [@user, @message], :remote => true do |f|
   = f.error_notification
-  = f.input :body
-  = f.input :bookmark
+  = f.input :body, placeholder: 'Start typing here, press enter to send'
   .row
     .small-9.columns.small-offset-3
       = f.button :submit, class: :right
