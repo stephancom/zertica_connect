@@ -11,10 +11,7 @@ ul= render @user.projects
 .panel Messages
 
 #messaging_panel.row
-	.columns.small-9.messages id=dom_id(@user, :message_panel)
+	.columns.small-12.messages id=dom_id(@user, :message_panel)
 		= render @user.messages
-	.columns.small-3
-		h4 bookmarks
-		= render @user.messages.bookmarked
 .row
-	.columns.small-9= render "messages/form"
+	.columns.small-12= render "messages/form"

@@ -6,10 +6,7 @@
 .panel Messages
 
 #messaging_panel.row
-  .columns.small-9.messages id=dom_id(@user, :message_panel)
+  .columns.small-12.messages id=dom_id(@user, :message_panel)
     = render @messages
-  .columns.small-3
-    h4 bookmarks
-    = render @messages.bookmarked
 .row
-  .columns.small-9= render "messages/form"
+  .columns.small-12= render "messages/form"
