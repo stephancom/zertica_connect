@@ -10,8 +10,10 @@
 //	&.staff
 //		background: hotpink
 
-.message.myself .message-text .bubble
-	float: right
+.message.myself .message-text 
+	text-align: right
+	.bubble
+		float: right
 
 .bookmark
 	&, &:visited
@@ -23,6 +25,15 @@
 		color: red
 		&:hover
 			color: lightgrey
+
+.timestamp
+	font-size: .8em
+	opacity: 0
+	margin-bottom: 0
+	transition: opacity .2s
+	-webkit-transition: opacity .2s
+.message-text:hover .timestamp
+	opacity: 1
 
 // http://cssdeck.com/labs/6mifhkdc
 .bubble
@@ -41,7 +52,7 @@
 	box-sizing: border-box
 	clear: both
 	float: left
-	margin-bottom: 20px
+	margin-bottom: 5px
 	padding: 8px 30px
 	position: relative
 	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7)
