@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on 'ready page:load', ->
+	$("#messaging_panel .messages").animate({ scrollTop: $('#messaging_panel .messages')[0].scrollHeight}, 1000);
 	$('#message_body').on 'keypress', (e) ->
 		if e.keyCode is 13 and not e.shiftKey
 			e.preventDefault()
