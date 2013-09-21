@@ -12,6 +12,9 @@ class Message < ActiveRecord::Base
   after_commit :push_add_message, on: :create
   after_commit :push_update_message, on: :update
 
+  delegate :name, to: :sender, prefix: true
+  delegate :name, to: :user, prefix: true
+
 private
 
 	def push_add_message
