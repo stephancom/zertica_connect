@@ -6,14 +6,18 @@ To recreate the heroku server named @zertica_connect@, do this:
 
 bc. heroku apps:create zertica_connect
 heroku addons:add pusher:sandbox
+heroku addons:add pgbackups:plus
+heroku addons:add newrelic:standard
+heroku addons:add mandrill:starter
+heroku domains:add zertica.com
 git push heroku master
 heroku run rake db:migrate
 
 h4. Paid accounts needed
 
 * Heroku
-* Mandrill
-* Pusher _(Probably optional - free sandbox level allows 100,000 messages per day)_
+* Mandrill _(optional - free starter level allows 12,000 emails per month)_
+* Pusher _(optional - free sandbox level allows 100,000 messages per day)_
 
 h2. Development
 
