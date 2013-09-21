@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
   validates :body, presence: true
   # validate user owns project or is admin?
 
-  default_scope order('created_at ASC')
+  default_scope order('created_at ASC').includes(:sender)
   scope :bookmarked, -> { where(bookmark: true) }
 
   after_commit :push_add_message, on: :create
