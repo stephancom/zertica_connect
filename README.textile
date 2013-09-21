@@ -46,12 +46,12 @@ On Heroku, Pusher is configured using the environment variables PUSHER_SOCKET_UR
 
 The most straightforward way to configure it on your local dev box is to set up the same environment variables.  Create a file ~/.pusher_urls like this:
 
-bc.( export PUSHER_SOCKET_URL='ws://ws.pusherapp.com:80/app/YOUR_KEY'
+bc. export PUSHER_SOCKET_URL='ws://ws.pusherapp.com:80/app/YOUR_KEY'
 export PUSHER_URL='http://YOUR_KEY:YOUR_SECRET@api.pusherapp.com/apps/APP_ID'
 
 and add to your ~/.bash_login (or whatever you use)
 
-bc.( [[ -s $HOME/.pusher_urls ]] && source $HOME/.pusher_urls
+bc. [[ -s $HOME/.pusher_urls ]] && source $HOME/.pusher_urls
 
 h2. Email
 
@@ -61,7 +61,7 @@ h2. Deployment
 
 To recreate the heroku server named zertica_connect, do this:
 
-bc.heroku apps:create zertica_connect
+bc. heroku apps:create zertica_connect
 heroku addons:add pusher:sandbox
 git push heroku master
 heroku run rake db:migrate
