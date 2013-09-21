@@ -33,5 +33,15 @@ and add to your ~/.bash_login (or whatever you use) as above
 
   [[ -s $HOME/.pusher_urls ]] && source $HOME/.pusher_urls
 
+== Deployment
+
+To recreate the heroku server named zertica_connect, do this:
+
+heroku apps:create zertica_connect
+heroku addons:add pusher:sandbox
+git push heroku master
+heroku run rake db:migrate
+
+
 == License
 

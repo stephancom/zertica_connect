@@ -40,13 +40,36 @@ h2. Development
 * Authentication: Devise
 * Authorization: CanCan
 
+h4. Pusher configuration
+
+On Heroku, Pusher is configured using the environment variables PUSHER_SOCKET_URL and PUSHER_URL.  Really only the second one appears to be important.
+
+The most straightforward way to configure it on your local dev box is to set up the same environment variables.  Create a file ~/.pusher_urls like this:
+
+bc.( export PUSHER_SOCKET_URL='ws://ws.pusherapp.com:80/app/YOUR_KEY'
+export PUSHER_URL='http://YOUR_KEY:YOUR_SECRET@api.pusherapp.com/apps/APP_ID'
+
+and add to your ~/.bash_login (or whatever you use)
+
+bc.( [[ -s $HOME/.pusher_urls ]] && source $HOME/.pusher_urls
+
 h2. Email
 
 The application is configured to send email using a Mandrill account.
 
-h2. Getting Started
+h2. Deployment
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+To recreate the heroku server named zertica_connect, do this:
+
+bc.heroku apps:create zertica_connect
+heroku addons:add pusher:sandbox
+git push heroku master
+heroku run rake db:migrate
+
+h4. Paid accounts needed
+
+* Heroku
+* Pusher _(Probably optional - free sandbox level allows 100,000 messages per day)_
 
 h2. Documentation and Support
 
@@ -54,11 +77,11 @@ This is the only documentation.
 
 h4. Issues
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+None known
 
 h2. Similar Projects
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+None known
 
 h2. Contributing
 
@@ -73,8 +96,8 @@ If you add functionality to this application, create an alternative implementati
 
 h2. Credits
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+by "stephan.com":http://stephan.com
 
 h2. License
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+(c) 2013 Zertica
