@@ -1,12 +1,6 @@
 - unless @user == current_user
-  h1 Listing messages for user #{@user.name}
+  h1 Messages for user #{@user.name}
 
   p= link_to "back to #{@user.name}", @user
 
-.panel Messages
-
-#messaging_panel.row
-  .columns.small-12.messages id=dom_id(@user, :message_panel)
-    = render @messages
-.row
-  .columns.small-12= render "messages/form"
+= render 'messages/messages_panel'

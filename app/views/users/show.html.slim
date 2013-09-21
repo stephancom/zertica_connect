@@ -1,17 +1,24 @@
 h1 #{@user.name}
 
-.panel Projects:
+.section-container.auto data-section=true
+	section
+		p.title data-section-title=true
+			a href='#messages' Messages
+		.content data-section-content=true
+			= render 'messages/messages_panel'
+	section
+		p.title data-section-title=true
+			a href='#projects' Projects
+		.content data-section-content=true
+			- if @user.projects.empty?
+				h2 No projects
+			ul= render @user.projects
+- if false
+	.panel Projects:
 
-- if @user.projects.empty?
-	h2 No projects
+	- if @user.projects.empty?
+		h2 No projects
 
-ul= render @user.projects
+	ul= render @user.projects
 
-
-.panel Messages
-
-#messaging_panel.row
-	.columns.small-12.messages id=dom_id(@user, :message_panel)
-		= render @user.messages
-.row
-	.columns.small-12= render "messages/form"
+	= render 'messages/messages_panel'

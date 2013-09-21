@@ -1,0 +1,5 @@
+#messaging_panel.row
+	.columns.small-12.messages id=dom_id(@user, :message_panel)
+		= render @messages
+.row
+	.columns.small-12= render "messages/form"

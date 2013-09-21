@@ -2,21 +2,15 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
 
+  before_filter :get_messages, only: :show
   before_filter :new_message, only: :show
-
 
   def index
     authorize! :index, @user, :message => 'Not authorized as an administrator.'
-    # @users = User.all
   end
-
-  # def show
-  #   @user = User.find(params[:id])
-  # end
   
   def update
     authorize! :update, @user, :message => 'Not authorized as an administrator.'
-    # @user = User.find(params[:id])
     if @user.update_attributes(params[:user], :as => :admin)
       redirect_to users_path, :notice => "User updated."
     else
@@ -26,7 +20,6 @@ class UsersController < ApplicationController
     
   def destroy
     authorize! :destroy, @user, :message => 'Not authorized as an administrator.'
-    # user = User.find(params[:id])
     unless @user == current_user
       @user.destroy
       redirect_to users_path, :notice => "User deleted."
@@ -36,6 +29,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def get_messages
+    @messages = @user.messages
+  end
 
   def new_message
     @message = @user.messages.new
