@@ -4,20 +4,12 @@ class UsersController < ApplicationController
 
   before_filter :get_messages, only: :show
   before_filter :new_message, only: :show
-
-  def index
-    authorize! :index, @user, :message => 'Not authorized as an administrator.'
-  end
   
   def update
-    authorize! :update, @user, :message => 'Not authorized as an administrator.'
-    if @user.update_attributes(params[:user], :as => :admin)
-      redirect_to users_path, :notice => "User updated."
-    else
-      redirect_to users_path, :alert => "Unable to update user."
-    end
+    flash[:notice] = 'User was successfully updated.' if @user.update(params[:user])
+    respond_with(@user)
   end
-    
+
   def destroy
     authorize! :destroy, @user, :message => 'Not authorized as an administrator.'
     unless @user == current_user
@@ -29,6 +21,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def user_params
+    if current_user.is_admin?
+      params[:user].permit(:name, :email, :password, :password_confirmation, :role_ids)
+    else
+      params[:user].permit(:name, :email, :password, :password_confirmation)
+    end
+  end
 
   def get_messages
     @messages = @user.messages
