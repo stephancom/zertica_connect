@@ -14,8 +14,8 @@ table
 
   - @projects.each do |project|
     tr
-        td = link_to_if can?(:show, project.user), project.user.name, project.user
       - if current_user.is_admin?
+        td = link_to_if can?(:show, project.user), project.user_name, project.user
       td = project.title
       td = project.state
       td = project.spec

@@ -11,6 +11,6 @@
 	.columns.small-3
 		- unless false or @project.user == current_user
 			| client:
-			= link_to_if can?(:show, @project.user), @project.user.name, @project.user
+			= link_to_if can?(:show, @project.user), @project.user_name, @project.user
 .row
 	.columns.small-12= simple_format h(@project.spec)

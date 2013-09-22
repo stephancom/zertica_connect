@@ -6,6 +6,8 @@ class Project < ActiveRecord::Base
 	validates :user, presence: true
 	validates :title, presence: true
 
+	delegate :name, to: :user, prefix: true
+
 	#     _        _                       _    _          
 	#  __| |_ __ _| |_ ___   _ __  __ _ __| |_ (_)_ _  ___ 
 	# (_-<  _/ _` |  _/ -_) | '  \/ _` / _| ' \| | ' \/ -_)
