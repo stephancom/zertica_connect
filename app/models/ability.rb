@@ -14,6 +14,8 @@ class Ability
             can :manage, [Project, Message], :user_id => user.id
         end
 
+        cannot :destroy, User, :id => user.id # can't delete yourself
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

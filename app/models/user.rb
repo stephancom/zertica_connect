@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
 	# :confirmable, :lockable, :timeoutable and :omniauthable
 	devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
-	has_many :projects
-	has_many :messages
+	has_many :projects, dependent: :destroy
+	has_many :messages, dependent: :destroy
 
 	def pusher_key
 	"user_#{id}"
