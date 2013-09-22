@@ -1,0 +1,16 @@
+.panel just a starting mockup
+
+.columns.large-9
+	h1 messages
+	.section-container.auto data-section=true
+		- @clients.each do |client|
+			section
+				p.title data-section-title=true
+					a href=dom_id(client, :messages)
+						= client.name
+				.content data-section-content=true
+					= render client.messages
+
+.columns.large-3
+	h1 users
+	ul= render @clients

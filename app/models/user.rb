@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
 	has_many :projects, dependent: :destroy
 	has_many :messages, dependent: :destroy
 
+	scope :clients, -> { where('id NOT IN (?)', with_role(:admin)) }
+
 	def pusher_key
 	"user_#{id}"
 	end
