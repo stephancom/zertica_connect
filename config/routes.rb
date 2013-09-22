@@ -1,15 +1,20 @@
-ZerticaConnect::Application.routes.draw do
-	root :to => "home#index"
+ZerticaConnect::Application.routes.draw do	
 	devise_for :users, :controllers => {:registrations => "registrations"}
 
-	resources :users do
+	authenticated :user do
+		resources :users do
+			resources :messages, except: [:edit, :update, :destroy] do
+				patch 'bookmark', on: :member
+			end
+		end
 		resources :messages, except: [:edit, :update, :destroy] do
 			patch 'bookmark', on: :member
 		end
-	end
-	resources :messages, except: [:edit, :update, :destroy] do
-		patch 'bookmark', on: :member
+
+		resources :projects 
+
+		get 'dashboard', to: 'home#dashboard'
 	end
 
-	resources :projects 
+	root :to => "home#index"
 end
