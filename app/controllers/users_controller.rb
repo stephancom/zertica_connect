@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    if current_user.is_admin?
+    if current_user.has_role :admin
       params[:user].permit(:name, :email, :password, :password_confirmation, :role_ids)
     else
       params[:user].permit(:name, :email, :password, :password_confirmation)
