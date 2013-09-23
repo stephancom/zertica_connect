@@ -13,8 +13,8 @@ ZerticaConnect::Application.routes.draw do
 
 		resources :projects 
 
-		get 'dashboard', to: 'home#dashboard'
+		root to: 'home#dashboard', as: :authenticated_root
 	end
 
-	root :to => "home#index"
+	root to: 'home#index', as: :root
 end
