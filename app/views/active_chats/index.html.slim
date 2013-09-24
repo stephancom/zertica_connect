@@ -1,0 +1,19 @@
+h1 Listing active_chats
+
+table
+  tr
+    th User
+    th Admin
+    th
+    th
+
+  - @active_chats.each do |active_chat|
+    tr
+      td = active_chat.name
+      td = active_chat.admin_name
+      td = link_to 'Show', active_chat
+      td = link_to 'Destroy', active_chat, :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'New Active chat', new_active_chat_path

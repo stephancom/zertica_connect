@@ -5,7 +5,8 @@ class Ability
         user ||= User.new # guest user (not logged in)
 
         if user.kind_of? Admin
-            can :manage, :all
+            can :manage, [User, Project, Message]
+            can :manage, ActiveChat, :admin_id => user.id
             cannot :destroy, Admin, :id => user.id
         end
 
