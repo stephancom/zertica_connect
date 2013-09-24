@@ -9,11 +9,8 @@
 		.small-11.columns.message-text
 			- if (@message_viewer == message.admin) || (@message_viewer == message.user and message.admin_id.nil?)
 				.bubble.bubble--alt= message.body
-				p.speaker
-					span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %B %e")
-					| me
 			- else
 				.bubble= message.body
-				p.speaker
-					= message.admin_name || message.user_name || 'deleted user'
-					span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")
+			p.speaker
+				= message.admin_name || message.user_name || 'deleted user'
+				span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")
