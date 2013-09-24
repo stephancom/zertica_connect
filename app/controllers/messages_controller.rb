@@ -11,7 +11,8 @@ class MessagesController < ApplicationController
   def create
     @message.user = @user || current_user
     @message.admin = current_admin
-    flash[:notice] = 'Message was successfully created.' if @message.save
+    @message.save
+    # flash[:notice] = 'Message was successfully created.' if @message.save
   end
 
   def bookmark
