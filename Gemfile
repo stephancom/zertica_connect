@@ -13,7 +13,6 @@ gem 'compass-rails', '~> 2.0.alpha.0'
 gem 'devise'
 gem 'figaro'
 gem 'pg'
-gem 'rolify'
 gem 'simple_form', '>= 3.0.0.rc'
 gem 'zurb-foundation'
 

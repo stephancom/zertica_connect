@@ -2,7 +2,7 @@ h1 Projects
 
 table
   tr
-    - if current_user.has_role? :admin
+    - if current_admin
       th Client
     th Title
     th State
@@ -14,7 +14,7 @@ table
 
   - @projects.each do |project|
     tr
-      - if current_user.has_role? :admin
+      - if current_admin
         td = link_to_if can?(:show, project.user), project.user_name, project.user
       td = project.title
       td = project.state

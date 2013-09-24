@@ -1,19 +1,27 @@
 ZerticaConnect::Application.routes.draw do	
+	devise_for :admins
 	devise_for :users, :controllers => {:registrations => "registrations"}
 
-	authenticated :user do
+	authenticated :admin do
 		resources :users do
 			resources :messages, except: [:edit, :update, :destroy] do
 				patch 'bookmark', on: :member
 			end
 		end
+
+		resources :projects 
+
+		root to: 'home#dashboard', as: :admin_root
+	end
+
+	authenticated :user do
 		resources :messages, except: [:edit, :update, :destroy] do
 			patch 'bookmark', on: :member
 		end
 
 		resources :projects 
 
-		root to: 'home#dashboard', as: :authenticated_root
+		root to: 'projects#index', as: :user_root
 	end
 
 	root to: 'home#index', as: :root

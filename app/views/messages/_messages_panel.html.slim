@@ -1,5 +1,10 @@
+- content_for :pusher_subscriptions do
+	script 
+		| pusher = new Pusher(PUSHER_KEY)
+			pusher.subscribe("#{(@user || current_user).pusher_key}").bind("rjs_push", function(data){eval (data)})
+
 #messaging_panel.row
-	.columns.small-12.messages id=dom_id(@user, :message_panel)
+	.columns.small-12.messages id=dom_id(@user || current_user, :message_panel)
 		= render @messages
 .row
 	.columns.small-12= render "messages/form"

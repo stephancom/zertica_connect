@@ -11,7 +11,10 @@ module PusherHelper
   def pusher_script
     javascript_include_tag("http://js.pusherapp.com/1.8/pusher.min.js")
   end
+  def pusher_current_user
+    current_admin || current_user
+  end
   def pusher_setup
-    pusher_attributes( 'KEY' => Pusher.key, 'USER_CHANNEL' => (current_user.pusher_key if current_user)) + pusher_script + pusher_debug
+    pusher_attributes( 'KEY' => Pusher.key, 'USER_CHANNEL' => (pusher_current_user.pusher_key if pusher_current_user)) + pusher_script + pusher_debug
   end
 end

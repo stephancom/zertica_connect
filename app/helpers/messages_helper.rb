@@ -1,9 +1,6 @@
 module MessagesHelper
 	def sender_class(message)
-		case message.sender
-		when nil
-			:system
-		when @message_viewer
+		if (@message_viewer == message.admin) or (@message_viewer == message.user and message.admin_id.nil?)
 			:myself
 		else
 			:staff

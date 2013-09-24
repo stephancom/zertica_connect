@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :message do
     body "MyText"
     user
-    sender nil
+    admin nil
     bookmark false
   end
 end

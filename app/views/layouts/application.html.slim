@@ -9,6 +9,7 @@ html
         = csrf_meta_tags
         = yield(:head)
         = pusher_setup
+        = yield(:pusher_subscriptions)
   body class=("#{controller_name} #{action_name}") 
     = render 'layouts/navigation'
     header.row= render 'layouts/flashes'

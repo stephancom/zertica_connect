@@ -11,21 +11,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130918000352) do
+ActiveRecord::Schema.define(version: 20130924021908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "admins", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.integer  "failed_attempts",        default: 0,  null: false
+    t.string   "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
+  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
+  add_index "admins", ["unlock_token"], name: "index_admins_on_unlock_token", unique: true, using: :btree
+
   create_table "messages", force: true do |t|
     t.text     "body",                       null: false
     t.integer  "user_id",                    null: false
-    t.integer  "sender_id"
     t.boolean  "bookmark",   default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "admin_id"
   end
 
-  add_index "messages", ["sender_id"], name: "index_messages_on_sender_id", using: :btree
+  add_index "messages", ["admin_id"], name: "index_messages_on_admin_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "projects", force: true do |t|
@@ -39,17 +62,6 @@ ActiveRecord::Schema.define(version: 20130918000352) do
   end
 
   add_index "projects", ["user_id"], name: "index_projects_on_user_id", using: :btree
-
-  create_table "roles", force: true do |t|
-    t.string   "name"
-    t.integer  "resource_id"
-    t.string   "resource_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -69,12 +81,5 @@ ActiveRecord::Schema.define(version: 20130918000352) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-
-  create_table "users_roles", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
-
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end

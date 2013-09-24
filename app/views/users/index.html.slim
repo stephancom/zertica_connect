@@ -6,8 +6,6 @@ h1 Users
         th Username
         th Email
         th Registered
-        th Role
-        th
         th
     tbody
       - @users.each do |user|
@@ -15,9 +13,4 @@ h1 Users
           td= link_to user.name, user
           td= user.email
           td= user.created_at.to_date
-          td= user.roles.first.name.titleize unless user.roles.first.nil?
-          td
-            - if can? :edit, user
-              a.button.tiny data-reveal-id=dom_id(user, :role_options) href="#" type="button"  Change role
-              = render partial: 'users/role', locals: {user: user}
           td= link_to("Delete user", user_path(user), data: {confirm: "Are you sure?  This will also destroy ALL projects and files associated with the user!!!"}, :method => :delete, :class => 'button tiny') if can? :destroy, user
