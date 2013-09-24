@@ -3,6 +3,8 @@ ZerticaConnect::Application.routes.draw do
 	devise_for :users, :controllers => {:registrations => "registrations"}
 
 	authenticated :admin do
+		resources :active_chats, except: [:edit, :update]
+
 		resources :messages, only: [] do
 			patch 'bookmark', on: :member
 		end

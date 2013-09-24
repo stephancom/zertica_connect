@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  load_and_authorize_resource # through: :user, shallow: true
+  load_and_authorize_resource
 
   before_filter :get_user
   before_filter :new_message, only: :index

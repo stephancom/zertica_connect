@@ -3,14 +3,18 @@
 .columns.large-9
 	h1 messages
 	.section-container.auto data-section=true
-		- @clients.each do |client|
+		- @chats.each do |chat|
 			section
 				p.title data-section-title=true
-					a href=dom_id(client, :messages)
-						= client.name
+					a href=dom_id(chat.user, :messages)
+						= chat.name
+					= link_to awesome('remove'), chat, :method => :delete
+
 				.content data-section-content=true
-					= render client.messages
+					= render chat.user.messages
 
 .columns.large-3
 	h1 users
-	ul= render @clients
+	ul
+		- @clients.each do |client|
+			= link_to client.name, active_chats_path(active_chat: {user_id: client.id}), method: :post, class: :button
