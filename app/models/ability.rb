@@ -14,7 +14,5 @@ class Ability
             can [:show, :update], User, :id => user.id  # user can always see their own account
             can :manage, [Project, Message], :user_id => user.id
         end
-
-        cannot :destroy, User, :id => user.id # can't delete yourself
   end
 end
