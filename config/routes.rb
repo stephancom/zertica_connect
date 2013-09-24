@@ -3,6 +3,9 @@ ZerticaConnect::Application.routes.draw do
 	devise_for :users, :controllers => {:registrations => "registrations"}
 
 	authenticated :admin do
+		resources :messages, only: [] do
+			patch 'bookmark', on: :member
+		end
 		resources :users do
 			resources :messages, except: [:edit, :update, :destroy] do
 				patch 'bookmark', on: :member

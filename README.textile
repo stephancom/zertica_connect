@@ -5,7 +5,6 @@ h2. Deployment
 To recreate the heroku server named @zertica_connect@, do this:
 
 bc. heroku apps:create zertica_connect
-heroku addons:add pusher:sandbox
 heroku addons:add pgbackups:plus
 heroku addons:add newrelic:standard
 heroku addons:add mandrill:starter
@@ -13,11 +12,24 @@ heroku domains:add zertica.com
 git push heroku master
 heroku run rake db:migrate
 
+You also need to set up a second server for Faye.  Instructions may be found here
+
+http://joshcrews.com/blog/2013/06/07/running-private-pub-slash-faye-server-on-heroku/
+
+bc. git clone https://github.com/IamNaN/heroku_private_pub zertica_connect_faye
+cd zertica_connect_faye/
+bundle install
+heroku create zertica-connect-faye
+
+change settings in config/private_pub.yml in BOTH the faye and the connect app
+
+git commit -a -m 'update config'
+git push heroku master
+
 h4. Paid accounts needed
 
 * Heroku
 * Mandrill _(optional - free starter level allows 12,000 emails per month)_
-* Pusher _(optional - free sandbox level allows 100,000 messages per day)_
 
 h2. Development
 
@@ -27,19 +39,6 @@ h2. Development
 * Form Builder: SimpleForm
 * Authentication: Devise
 * Authorization: CanCan
-
-h4. Pusher configuration
-
-On Heroku, Pusher is configured using the environment variables @PUSHER_SOCKET_URL@ and @PUSHER_URL@.  Really only the second one appears to be important.
-
-The most straightforward way to configure it on your local dev box is to set up the same environment variables.  Create a file @~/.pusher_urls@ like this:
-
-bc. export PUSHER_SOCKET_URL='ws://ws.pusherapp.com:80/app/YOUR_KEY'
-export PUSHER_URL='http://YOUR_KEY:YOUR_SECRET@api.pusherapp.com/apps/APP_ID'
-
-and add to your @~/.bash_login@ (or whatever you use)
-
-bc. [[ -s $HOME/.pusher_urls ]] && source $HOME/.pusher_urls
 
 h2. History
 

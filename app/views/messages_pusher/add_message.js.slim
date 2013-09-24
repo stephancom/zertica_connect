@@ -1,4 +1,0 @@
-| $('##{dom_id(@message.user, :message_panel)}').append("#{escape_javascript render(@message)}");
-	$("#messaging_panel .messages").animate({ scrollTop: $('#messaging_panel .messages').prop("scrollHeight")}, 1000);
-- if (@message.admin and @message_viewer == @message.admin) or (@message.user == @message_viewer)
-	| $('#message_body').val('');
