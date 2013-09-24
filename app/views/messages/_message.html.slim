@@ -6,19 +6,14 @@
 					i.icon-star.icon-2x
 				- else
 					i.icon-star-empty.icon-2x
-		- if message.sender
-			- if message.sender == @message_viewer
-				.small-11.columns.message-text
-					.bubble.bubble--alt= message.body
-					p.speaker 
-						span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %B %e")
-						| me
+		.small-11.columns.message-text
+			- if (@message_viewer == message.admin) || (@message_viewer == message.user and message.admin_id.nil?)
+				.bubble.bubble--alt= message.body
+				p.speaker
+					span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %B %e")
+					| me
 			- else
-				.small-11.columns.message-text
-					.bubble= message.body
-					p.speaker
-						= message.sender_name || 'deleted user'
-						span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")
-		- else
-			.small-11.columns
-				.panel.callout.radius= message.body
+				.bubble= message.body
+				p.speaker
+					= message.admin_name || message.user_name || 'deleted user'
+					span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")

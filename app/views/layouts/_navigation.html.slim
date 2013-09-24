@@ -7,15 +7,19 @@ nav.top-bar
         span Menu
   section.top-bar-section
     ul.right
-      - if user_signed_in?
-        - if can? :index, User
-          li= link_to 'Users', users_path
+      - if admin_signed_in?
+        li.admin
+          a Admin:
+        li= link_to 'Users', users_path if can? :index, User
+        li= link_to 'Projects', projects_path if can? :index, Project
+        li= link_to current_admin.name, edit_admin_registration_path
+        li= link_to 'Logout', destroy_admin_session_path, :method=>'delete'
+      - elsif user_signed_in?
         li= link_to 'Projects', projects_path if can? :index, Project
         li= link_to 'Messages', messages_path if can? :index, Message
+        li= link_to current_user.name, edit_user_registration_path
         li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
-        li= link_to 'Edit account', edit_user_registration_path
-        li
-          a= "Welcome #{current_user.name}"
       - else
         li= link_to 'Login', new_user_session_path
         li= link_to 'Sign up', new_user_registration_path
+        li= link_to 'Admin', new_admin_session_path

@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_admin!
   load_and_authorize_resource
 
   before_filter :get_messages, only: :show
@@ -18,11 +18,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    if current_user.has_role :admin
-      params[:user].permit(:name, :email, :password, :password_confirmation, :role_ids)
-    else
-      params[:user].permit(:name, :email, :password, :password_confirmation)
-    end
+    params[:user].permit(:name, :email, :password, :password_confirmation)
   end
 
   def get_messages
