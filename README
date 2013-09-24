@@ -18,27 +18,11 @@ Preferences:
 
 ________________________
 
-== Pusher configuration for development
-
-On Heroku, Pusher is configured using the environment variables PUSHER_SOCKET_URL and PUSHER_URL.
-
-Really only the second one appears to be important.
-
-The most straightforward way to configure it on your local dev box is to set up the same environment variables.  Create a file ~/.pusher_urls like this:
-
-  export PUSHER_SOCKET_URL='ws://ws.pusherapp.com:80/app/YOUR_KEY'
-  export PUSHER_URL='http://YOUR_KEY:YOUR_SECRET@api.pusherapp.com/apps/APP_ID'
-
-and add to your ~/.bash_login (or whatever you use) as above
-
-  [[ -s $HOME/.pusher_urls ]] && source $HOME/.pusher_urls
-
 == Deployment
 
 To recreate the heroku server named zertica_connect, do this:
 
 heroku apps:create zertica_connect
-heroku addons:add pusher:sandbox
 git push heroku master
 heroku run rake db:migrate
 

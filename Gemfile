@@ -28,7 +28,8 @@ gem 'slim-rails'
 gem "font-awesome-rails"
 
 # persistent connection
-gem 'pusher'
+gem 'private_pub'
+gem 'thin'
 
 group :development do
   gem 'better_errors'

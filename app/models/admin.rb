@@ -3,9 +3,4 @@ class Admin < ActiveRecord::Base
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-
-
-	def pusher_key
-		"admin_#{id}"
-	end
 end
