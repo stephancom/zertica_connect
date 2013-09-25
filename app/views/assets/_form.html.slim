@@ -1,0 +1,8 @@
+= simple_form_for [@project, @asset] do |f|
+  = f.error_notification
+  = f.input :title
+  = f.input :notes
+  = f.input :visible
+  .row
+    .small-9.columns.small-offset-3
+      = f.button :submit, class: :right

@@ -1,16 +1,15 @@
 .row
 	.columns.small-9
 		h1
-			= link_to awesome('pencil', 'Edit'), edit_project_path(@project)
 			= @project.title
+			= link_to awesome('pencil', 'Edit'), edit_project_path(@project)
 	.columns.small-3
 		h2= @project.state
+		p Due on #{@project.deadline}
 .row
 	.columns.small-9
-		p Due on #{@project.deadline}
+		= simple_format h(@project.spec)
 	.columns.small-3
-		- unless false or @project.user == current_user
-			| client:
-			= link_to_if can?(:show, @project.user), @project.user_name, @project.user
-.row
-	.columns.small-12= simple_format h(@project.spec)
+		h2 assets
+		p= link_to 'New Asset', new_project_asset_path(@project)
+		= render @project.assets

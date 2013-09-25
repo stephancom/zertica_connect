@@ -16,7 +16,7 @@ table
     tr
       - if current_admin
         td = link_to_if can?(:show, project.user), project.user_name, project.user
-      td = project.title
+      td = link_to project.title, project
       td = project.state
       td = project.spec
       td = project.deadline

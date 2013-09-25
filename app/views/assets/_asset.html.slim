@@ -1,0 +1,4 @@
+.row
+	.columns.small-1= link_to awesome('pencil'), edit_project_asset_path(asset.project, asset)
+	.columns.small-9= link_to asset.title, [asset.project, asset]
+	.columns.small-1= link_to awesome('trash'), [@project, asset], :confirm => 'Are you sure?', :method => :delete
