@@ -1,0 +1,23 @@
+h1 Listing assets for #{@project.title}
+
+table
+  tr
+    th Title
+    th Notes
+    th Visible
+    th
+    th
+    th
+
+  - @assets.each do |asset|
+    tr
+      td = asset.title
+      td = asset.notes
+      td = asset.visible
+      td = link_to 'Show', [@project, asset]
+      td = link_to 'Edit', edit_project_asset_path(@project, asset)
+      td = link_to 'Destroy', [@project, asset], :confirm => 'Are you sure?', :method => :delete
+
+br
+
+= link_to 'New Asset', new_project_asset_path(@project)

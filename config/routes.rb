@@ -1,4 +1,6 @@
 ZerticaConnect::Application.routes.draw do	
+	# resources :assets
+
 	devise_for :admins, :controllers => {:registrations => "admin_registrations"}
 	devise_for :users, :controllers => {:registrations => "registrations"}
 
@@ -14,7 +16,9 @@ ZerticaConnect::Application.routes.draw do
 			end
 		end
 
-		resources :projects 
+		resources :projects do
+		  resources :assets
+		end
 
 		root to: 'active_chats#index', as: :admin_root
 	end
@@ -24,7 +28,9 @@ ZerticaConnect::Application.routes.draw do
 			patch 'bookmark', on: :member
 		end
 
-		resources :projects 
+		resources :projects do
+			resources :assets
+		end
 
 		root to: 'projects#index', as: :user_root
 	end

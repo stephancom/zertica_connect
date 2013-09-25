@@ -2,6 +2,7 @@ class Project < ActiveRecord::Base
 	include Stateflow
 
 	belongs_to :user
+	has_many :assets, dependent: :destroy
 
 	validates :user, presence: true
 	validates :title, presence: true

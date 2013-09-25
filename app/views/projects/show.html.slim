@@ -14,3 +14,5 @@
 			= link_to_if can?(:show, @project.user), @project.user_name, @project.user
 .row
 	.columns.small-12= simple_format h(@project.spec)
+
+= link_to 'Assets', project_assets_path(@project)
