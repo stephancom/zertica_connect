@@ -1,19 +1,14 @@
-h1 Listing active_chats
+h1 Messages
 
-table
-  tr
-    th User
-    th Admin
-    th
-    th
+.large-3.columns
+  ul.side-nav
+    li Users
+    - User.all.each do |client|
+      li= link_to client.name, active_chats_path(active_chat: {user_id: client.id}), method: :post
+    li.divider
+    li Admins (for convenience)
+    - Admin.all.each do |admin|
+      li= admin.name
 
-  - @active_chats.each do |active_chat|
-    tr
-      td = active_chat.name
-      td = active_chat.admin_name
-      td = link_to 'Show', active_chat
-      td = link_to 'Destroy', active_chat, :confirm => 'Are you sure?', :method => :delete
-
-br
-
-= link_to 'New Active chat', new_active_chat_path
+.large-9.columns
+  #active-chats.section-container.auto data-section=true = render @active_chats

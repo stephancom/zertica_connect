@@ -5,13 +5,12 @@ class ActiveChatsController < ApplicationController
   def create
     @active_chat = current_admin.active_chats.new(params[:active_chat])    
     flash[:notice] = 'ActiveChat was successfully created.' if @active_chat.save
-    # respond_with(@active_chat)
-    redirect_to root_path
+    redirect_to active_chats_path
   end
 
   def destroy
     @active_chat.destroy
-    redirect_to root_path
+    respond_with @active_chat
   end
 
   private

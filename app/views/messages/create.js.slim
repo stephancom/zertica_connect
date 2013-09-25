@@ -1,4 +1,4 @@
+- panel_id = '#'+dom_id(@message.user, :message_panel)
 - publish_to "/messages/new/#{@message.user_id}" do
-	| $('##{dom_id(@message.user, :message_panel)}').append("#{j render(@message)}");
-	| $("#messaging_panel .messages").animate({ scrollTop: $('#messaging_panel .messages').prop("scrollHeight")}, 1000);
-| $('#message_body').val('');
+	| $('#{panel_id} .messages').append("#{j render(@message)}").animate({ scrollTop: $('#{panel_id} .messages').prop("scrollHeight")}, 1000);
+| $('#{panel_id} textarea[name="message[body]"]').val('');

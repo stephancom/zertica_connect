@@ -1,4 +1,8 @@
-= minimal_form_for [@user, @message], :remote => true do |f|
+- user = @user unless local_assigns.has_key? :user
+- message = @message unless local_assigns.has_key? :message
+- form_path = current_admin ? [user, message] : message
+
+= minimal_form_for form_path, :remote => true do |f|
   = f.error_notification
   = f.input :body, placeholder: 'Start typing here, press enter to send'
   .row
