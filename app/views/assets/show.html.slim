@@ -1,18 +1,22 @@
-p#notice = notice
+.row
+	.columns.large-9
+		h1= @asset.title
+	.columns.large-3
+		h3 project: #{@project.title}
 
-p
-  strong Project:
-  = @asset.project_title
-p
-  strong Title:
-  = @asset.title
-p
-  strong Notes:
-  = @asset.notes
-p
-  strong Visible:
-  = @asset.visible
+.row
+	.columns.large-8
+		h4 Notes
+		p= @asset.notes
+	.columns.large-4
+		p 
+			| The client 
+			b can
+			- unless @asset.visible
+				b not
+			|  see this asset
+
 
 = link_to 'Edit', edit_project_asset_path(@project, @asset)
 '|
-= link_to 'Back', project_assets_path(@project)
+= link_to 'Back', @project
