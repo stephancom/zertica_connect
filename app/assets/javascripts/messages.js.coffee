@@ -14,5 +14,4 @@ $(document).on 'ready page:load', ->
 			if e.keyCode is 13 and not e.shiftKey
 				e.preventDefault()
 				if not not $(@).val() # don't send if field is empty
-					clicker.css('background','orange')
 					clicker.trigger('click')
