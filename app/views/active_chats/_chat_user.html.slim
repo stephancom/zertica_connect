@@ -1,0 +1,2 @@
+li id=dom_id(chat_user, :chat_toggle) 
+	= link_to chat_user.name, active_chats_path(active_chat: {user_id: chat_user.id}), method: :post, remote: true
