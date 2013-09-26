@@ -5,5 +5,3 @@
 			= render @messages || user.messages
 	.row
 		.columns.small-12= render "messages/form", user: user, message: (@message || user.messages.new)
-
-= subscribe_to "/messages/new/#{user.id}"

@@ -9,4 +9,5 @@ class ActiveChat < ActiveRecord::Base
 
   delegate :name, to: :user
   delegate :name, to: :admin, prefix: true
+  delegate :message_channel, to: :user
 end
