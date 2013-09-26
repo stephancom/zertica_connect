@@ -32,6 +32,6 @@ class AssetsController < ApplicationController
   private
 
   def asset_params
-    params[:asset].permit(:title, :notes, :visible)
+    params[:asset].permit(:title, :notes, :visible, :filepicker_url)
   end
 end
