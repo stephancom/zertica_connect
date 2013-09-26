@@ -10,6 +10,6 @@
 	.columns.small-9
 		= simple_format h(@project.spec)
 	.columns.small-3
-		h2 assets
-		p= link_to 'New Asset', new_project_asset_path(@project)
+		h2 files
+		p= link_to 'New File', new_project_asset_path(@project)
 		= render @project.assets
