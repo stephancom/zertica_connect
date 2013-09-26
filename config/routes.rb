@@ -1,6 +1,4 @@
 ZerticaConnect::Application.routes.draw do	
-	# resources :assets
-
 	devise_for :admins, :controllers => {:registrations => "admin_registrations"}
 	devise_for :users, :controllers => {:registrations => "registrations"}
 
@@ -17,7 +15,7 @@ ZerticaConnect::Application.routes.draw do
 		end
 
 		resources :projects do
-		  resources :assets
+		  resources :assets, path: 'files'
 		end
 
 		root to: 'active_chats#index', as: :admin_root
@@ -29,7 +27,7 @@ ZerticaConnect::Application.routes.draw do
 		end
 
 		resources :projects do
-			resources :assets
+			resources :assets, path: 'files'
 		end
 
 		root to: 'projects#index', as: :user_root
