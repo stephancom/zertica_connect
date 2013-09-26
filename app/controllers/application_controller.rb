@@ -20,15 +20,9 @@ class ApplicationController < ActionController::Base
 	  params[resource] &&= send(method) if respond_to?(method, true)
 	end
 
-	before_filter :set_message_viewer
-
 private
 
 	def current_account
 		current_admin || current_user
-	end
-
-	def set_message_viewer
-		@message_viewer = current_account
 	end
 end

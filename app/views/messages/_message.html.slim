@@ -7,10 +7,10 @@
 				- else
 					i.icon-star-empty.icon-2x
 		.small-11.columns.message-text
-			- if (@message_viewer == message.admin) || (@message_viewer == message.user and message.admin_id.nil?)
-				.bubble.bubble--alt= message.body
-			- else
+			- if message.admin_id
 				.bubble= message.body
+			- else
+				.bubble.bubble--alt= message.body
 			p.speaker
 				= message.admin_name || message.user_name || 'deleted user'
 				span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")

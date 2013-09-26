@@ -1,10 +1,6 @@
 module MessagesHelper
 	def sender_class(message)
-		if (@message_viewer == message.admin) or (@message_viewer == message.user and message.admin_id.nil?)
-			:myself
-		else
-			:staff
-		end
+		message.admin_id ? :staff : :myself
 	end
 
 	def message_attrs(message)
