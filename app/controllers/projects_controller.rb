@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
 
+  before_filter :new_asset, only: :show
+
   def create
     flash[:notice] = 'Project was successfully created.' if @project.save
     respond_with(@project)
@@ -17,6 +19,10 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def new_asset
+    @asset = @project.assets.new
+  end
 
   def project_params
     params[:project].permit(:title, :spec, :deadline)
