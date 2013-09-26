@@ -4,7 +4,7 @@ h1 Messages
   ul.side-nav
     li Users
     - User.all.each do |client|
-      li= link_to client.name, active_chats_path(active_chat: {user_id: client.id}), method: :post
+      li= link_to_if current_admin.active_chats.where(user: client).empty?, client.name, active_chats_path(active_chat: {user_id: client.id}), method: :post, remote: true
     li.divider
     li Admins (for convenience)
     - Admin.all.each do |admin|
