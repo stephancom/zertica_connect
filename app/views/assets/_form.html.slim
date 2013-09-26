@@ -4,5 +4,7 @@
   = f.input :notes
   = f.input :visible
   .row
+    .small-9.columns.small-offset-3.filepicker= f.filepicker_field :filepicker_url, dragdrop: true, drag_class: :picker_drag
+  .row
     .small-9.columns.small-offset-3
       = f.button :submit, class: :right

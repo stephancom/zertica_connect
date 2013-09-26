@@ -8,6 +8,7 @@ bc. heroku apps:create zertica_connect
 heroku addons:add pgbackups:plus
 heroku addons:add newrelic:standard
 heroku addons:add mandrill:starter
+heroku addons:add filepicker:test
 heroku domains:add zertica.com
 git push heroku master
 heroku run rake db:migrate
@@ -26,10 +27,14 @@ change settings in config/private_pub.yml in BOTH the faye and the connect app
 git commit -a -m 'update config'
 git push heroku master
 
+also, create your desired bucket and configure your keys for Ink Filepicker through Heroku
+
 h4. Paid accounts needed
 
-* Heroku
+* Heroku _(TWO servers, but the free level seems to be working ok?)_
+* Amazon S3
 * Mandrill _(optional - free starter level allows 12,000 emails per month)_
+* Ink Filepicker _(optional - free starter level allows 5,000 files per month; currently in beta)_
 
 h2. Development
 
@@ -43,6 +48,22 @@ h2. Development
 h4. Development faye server
 
 bc. rackup private_pub.ru -s thin -E production
+
+h4. Development Ink Filepicker setup
+
+On OSX, I do this...
+
+bc.. # in ~/.bash_login
+  [[ -s $HOME/.filepicker_keys ]] && source $HOME/.filepicker_keys
+
+  # in ~/.bashrc (might be redundant)
+  if [[ -f "$HOME/.filepicker_keys" ]]; then
+    source "$HOME/.filepicker_keys";
+  fi
+
+  # in ~/.filepicker_keys
+  export FILEPICKER_API_KEY='XYZXYZ'
+  export FILEPICKER_API_SECRET='XYZXYZ'
 
 h2. History
 

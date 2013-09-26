@@ -22,14 +22,14 @@ gem 'responders'
 gem 'squeel'
 gem 'stateflow'
 gem 'gritter'
-gem 'carrierwave'
-gem 'remotipart'
 gem 'slim-rails'
 gem "font-awesome-rails"
 
 # persistent connection
 gem 'private_pub'
 gem 'thin'
+
+gem 'filepicker-rails'
 
 group :development do
   gem 'better_errors'
