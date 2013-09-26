@@ -13,5 +13,5 @@ setupMessagePanels = ->
 					clicker.trigger('click')
 
 $(document).on 'ready page:load', ->
-	setupMessagePanels()
+	setTimeout setupMessagePanels, 200 # wait 200ms while the tabs get set up
 	$(document).foundation('section', {callback: setupMessagePanels});
