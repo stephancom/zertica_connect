@@ -1,5 +1,6 @@
 - unless asset.new_record?
 	.row
-		.columns.small-1= link_to awesome('pencil', "edit #{asset.title}"), edit_project_asset_path(asset.project, asset), class: [:button, :tiny]
-		.columns.small-9= link_to asset.title, [asset.project, asset]
-		.columns.small-1= link_to awesome('trash', "delete #{asset.title}"), [@project, asset], :confirm => 'Are you sure?', :method => :delete, class: [:button, :tiny]
+		.columns.small-2= filepicker_save_button "Download", asset.filepicker_url, '', class: :small
+		.columns.small-8= link_to asset.title, [asset.project, asset]
+		.columns.small-1= link_to awesome('pencil', "edit #{asset.title}"), edit_project_asset_path(asset.project, asset), class: [:button, :small]
+		.columns.small-1= link_to awesome('trash', "delete #{asset.title}"), [@project, asset], :confirm => 'Are you sure?', :method => :delete, class: [:button, :small]
