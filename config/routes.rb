@@ -15,7 +15,7 @@ ZerticaConnect::Application.routes.draw do
 		end
 
 		resources :projects do
-		  resources :assets, path: 'files'
+		  resources :assets
 		end
 
 		root to: 'active_chats#index', as: :admin_root
@@ -27,7 +27,7 @@ ZerticaConnect::Application.routes.draw do
 		end
 
 		resources :projects do
-			resources :assets, path: 'files'
+			resources :assets
 		end
 
 		root to: 'projects#index', as: :user_root

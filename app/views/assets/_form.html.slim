@@ -1,10 +1,11 @@
 = simple_form_for [@project, @asset] do |f|
   = f.error_notification
-  = f.input :title
-  = f.input :notes
-  = f.input :visible
-  .row
-    .small-9.columns.small-offset-3.filepicker= f.filepicker_field :filepicker_url, dragdrop: true, drag_class: :picker_drag
-  .row
-    .small-9.columns.small-offset-3
-      = f.button :submit, class: :right
+  .columns.large-6
+	  = f.input :title
+	  = f.input :notes
+	  = f.input :visible if current_admin
+  .columns.large-6
+	  .row
+	    .small-12.columns.filepicker= f.filepicker_field :filepicker_url, dragdrop: true, drag_class: :picker_drag
+	  .row
+	    .small-12.columns= f.button :submit

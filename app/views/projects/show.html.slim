@@ -9,8 +9,9 @@
 .row
 	.columns.small-9
 		h2 files
-		p= link_to 'New File', new_project_asset_path(@project)
 		= render @project.assets
+		h4 add a file
+		= render 'assets/form'
 	.columns.small-3
 		h2 spec
 		= simple_format h(@project.spec)
