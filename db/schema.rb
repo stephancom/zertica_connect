@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130926000715) do
+ActiveRecord::Schema.define(version: 20130928062112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,10 +51,9 @@ ActiveRecord::Schema.define(version: 20130926000715) do
   add_index "admins", ["unlock_token"], name: "index_admins_on_unlock_token", unique: true, using: :btree
 
   create_table "assets", force: true do |t|
-    t.integer  "project_id",                    null: false
+    t.integer  "project_id",     null: false
     t.string   "title"
     t.text     "notes"
-    t.boolean  "visible",        default: true, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "filepicker_url"

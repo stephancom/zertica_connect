@@ -5,6 +5,5 @@ FactoryGirl.define do
     project nil
     title "MyString"
     notes "MyText"
-    visible false
   end
 end

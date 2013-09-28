@@ -3,7 +3,6 @@
   .columns.large-6
 	  = f.input :title
 	  = f.input :notes
-	  = f.input :visible if current_admin
   .columns.large-6
 	  .row
 	    .small-12.columns.filepicker= f.filepicker_field :filepicker_url, dragdrop: true, drag_class: :picker_drag

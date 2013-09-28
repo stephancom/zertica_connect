@@ -14,7 +14,7 @@ class Ability
         unless user.new_record?
             can [:show, :update], User, id: user.id  # user can always see their own account
             can :manage, [Project, Message], user_id: user.id
-            can :manage, Asset, :project => { :user_id => user.id }, :visible => true
+            can :manage, Asset, :project => { :user_id => user.id }
         end
         can :manage, Asset #, project: { user_id: user.id }
     end
