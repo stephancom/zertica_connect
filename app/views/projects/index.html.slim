@@ -5,7 +5,6 @@ table
     - if current_admin
       th Client
     th Title
-    th State
     th Spec
     th Deadline
     th
@@ -17,7 +16,6 @@ table
       - if current_admin
         td = link_to_if can?(:show, project.user), project.user_name, project.user
       td = link_to project.title, project
-      td = project.state
       td = project.spec
       td = project.deadline
       td = link_to awesome('search', 'Show'), project if can? :show, project

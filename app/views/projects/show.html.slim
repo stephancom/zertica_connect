@@ -1,11 +1,9 @@
 .row
 	.columns.small-9
-		h1
-			= @project.title
-			= link_to awesome('pencil', 'Edit'), edit_project_path(@project)
+		h1= @project.title
 	.columns.small-3
-		h2= @project.state
-		p Due on #{@project.deadline}
+		h2= link_to awesome('pencil', 'Edit')+' edit', edit_project_path(@project)
+		h5 deadline #{@project.deadline}
 .row
 	.columns.small-9
 		h2 files
