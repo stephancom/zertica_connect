@@ -129,6 +129,10 @@ h2. Credits
 
 by "stephan.com":http://stephan.com
 
+h3. a note from the developer
+
+really, this isn't my best work.  there's no meaningful tests to speak of, the security isn't very good, there's bunches of routes and methods that shouldn't be there, it's all rather thrown together in a hurry with a small budget.  If you're looking at this as an example of my work, well, there's a few gems in here I'm proud of, but on the whole, this isn't really up to my usual standards, it's just quick, cheap, with a flimsy spec and minimal budget, but it does what it's meant to do.  I'd love to really spend the time to bring this project up to my own standards.  But it ain't too bad for a quickie little job :) thanks for understanding - stephan.com
+
 h2. License
 
 (c) 2013 Zertica
