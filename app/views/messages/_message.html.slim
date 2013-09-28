@@ -12,5 +12,5 @@
 			- else
 				.bubble.bubble--alt= message.body
 			p.speaker
-				= message.admin_name || message.user_name || 'deleted user'
+				= message.speaker_name
 				span.timestamp= message.created_at.in_time_zone.strftime("%I:%M%p on %b %e")

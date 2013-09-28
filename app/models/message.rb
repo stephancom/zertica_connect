@@ -11,4 +11,8 @@ class Message < ActiveRecord::Base
 
   delegate :name, to: :admin, prefix: true, allow_nil: true
   delegate :name, to: :user, prefix: true
+
+  def speaker_name
+  	admin_id ? (admin_name || 'zertica staff') : (user_name || 'deleted user')
+  end
 end
