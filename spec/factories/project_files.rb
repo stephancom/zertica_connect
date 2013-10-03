@@ -1,9 +1,9 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
-  factory :asset do
+  factory :project_file do
     project nil
-    title "MyString"
-    notes "MyText"
+    url "MyString"
+    data ""
   end
 end
