@@ -1,0 +1,54 @@
+h1
+  - if @order.order_type == 'CadOrder'
+    | CAD
+  - else
+    | Print
+  |  Order: #{@order.title}
+
+h2 project: #{link_to_if can?(:show, @order.project), @order.project_title, @order.project}
+
+p
+  h2 status: #{@order.state.capitalize}
+
+  - if can? :estimate, @order
+    .small-9.columns.small-offset-3
+      h3 Estimate
+    = simple_form_for @order, url: [:estimate, @order] do |f|
+      = f.input :price
+      .small-3.columns.small-offset-9= f.button :submit, 'Estimate'
+
+  = link_to 'Mark complete', [:complete, @order], method: :put, class: :button if can? :complete, @order
+  = link_to 'Archive', archive_order_path(@order), class: :button if can? :archive, @order
+
+- unless @order.description.blank?
+  h3 Details:
+  p= @order.description
+
+- unless @order.submitted?
+  h3 
+    | Price: #{number_to_currency @order.price}
+  - if can? :pay, @order
+    .small-9.columns.small-offset-3
+      h3 Pay
+    = simple_form_for @order, url: [:pay, @order] do |f|
+      = f.input :confirmation, hint: 'check number, notes, or confirmation number'
+      .small-3.columns.small-offset-9= f.button :submit, 'Pay Now'
+  - if @order.payment_processed?
+    h3 Paid: #{@order.confirmation}
+
+- if can? :ship, @order
+    .small-9.columns.small-offset-3
+      h3 Ship
+    = simple_form_for @order, url: [:ship, @order] do |f|
+      = f.input :carrier, collection: Order::CARRIERS
+      = f.input :tracking_number
+      .small-3.columns.small-offset-9= f.button :submit, 'Ship'
+
+- if @order.shipped?
+  h3 
+    | Tracking number: 
+    = link_to @order.tracking_number, '#'
+
+= link_to 'Edit', edit_project_order_path(@order.project, @order)
+'|
+= link_to 'Back', @order.project

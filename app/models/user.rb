@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
 	has_many :projects, dependent: :destroy
 	has_many :messages, dependent: :destroy
 	has_many :active_chats, dependent: :destroy
+	has_many :orders, through: :projects
 
 	def message_channel
 		"/messages/new/#{id}"

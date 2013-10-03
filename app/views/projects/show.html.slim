@@ -13,3 +13,7 @@
 	.columns.small-3
 		h2 spec
 		= simple_format h(@project.spec)
+		hr
+		h2 orders
+		ul= render @project.orders
+		= link_to 'Place Order', new_project_order_path(@project), class: :button if can?(:create, @project.orders.new)

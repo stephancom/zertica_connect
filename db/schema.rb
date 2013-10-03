@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130928063916) do
+ActiveRecord::Schema.define(version: 20131002053106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,22 @@ ActiveRecord::Schema.define(version: 20130928063916) do
 
   add_index "messages", ["admin_id"], name: "index_messages_on_admin_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
+
+  create_table "orders", force: true do |t|
+    t.string   "order_type"
+    t.integer  "project_id",                                                    null: false
+    t.string   "state",                                   default: "submitted", null: false
+    t.string   "title",                                                         null: false
+    t.text     "description"
+    t.decimal  "price",           precision: 8, scale: 2
+    t.string   "carrier"
+    t.string   "tracking_number"
+    t.string   "confirmation"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["project_id"], name: "index_orders_on_project_id", using: :btree
 
   create_table "projects", force: true do |t|
     t.string   "title",      default: "New Project", null: false
