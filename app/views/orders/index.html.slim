@@ -22,9 +22,9 @@ table
       td = order.description
       td = number_to_currency(order.price) || '--'
       td = order.tracking_number || '--'
-      td = link_to 'Show', order
-      td = link_to 'Edit', edit_order_path(order)
-      td = link_to 'Destroy', order, :confirm => 'Are you sure?', :method => :delete
+      td = link_to awesome('search', 'Show'), order if can? :show, order
+      td = link_to awesome('pencil', 'Edit'), edit_order_path(order) if can? :edit, order
+      td = link_to awesome('trash', 'Destroy'), order, :confirm => 'Are you sure?', :method => :delete if can? :destroy, order
 
 br
 
