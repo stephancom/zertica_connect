@@ -98,7 +98,7 @@ private
   def order_params
     case action_name
     when 'create'
-      params[:order].permit(:order_type, :title, :description)
+      params[:order].permit(:order_type, :title, :description, project_file_ids: [])
     when 'estimate'
       params[:order].permit(:price)
     when 'pay'
@@ -108,7 +108,7 @@ private
     when 'ship'
       params[:order].permit(:carrier, :tracking_number)
     else      
-      params[:order].permit(:title, :description)
+      params[:order].permit(:title, :description, project_file_ids: [])
     end
     # TODO allow carrier/tracking number/shipping files if admin and state completed
   end

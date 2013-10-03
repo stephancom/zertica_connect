@@ -5,6 +5,8 @@
         .right Project
       .small-9.columns= @order.project_title
     = f.input :order_type, collection: Order::ORDER_TYPES, as: :radio_buttons if @order.new_record?
+
+    = f.association :project_files, collection: @project.project_files, as: :check_boxes
     = f.input :title
     = f.input :description
     -# only changeable by admin

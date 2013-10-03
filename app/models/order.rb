@@ -14,7 +14,7 @@ class Order < ActiveRecord::Base
 	delegate :name, to: :user, prefix: true
 
 	# TODO
-	# has_and_belongs_to_many :project_files
+	has_and_belongs_to_many :project_files
 	# TODO
 	# validate project_files belong to project
 	# TODO

@@ -24,6 +24,14 @@ p
   h3 Details:
   p= @order.description
 
+h3 Files
+ul
+  - @order.project_files.each do |file|
+    li
+      = link_to_if can?(:show, file), file.name, [@order.project, file]
+      = filepicker_image_tag file.url, w: 64, h: 64 if file.mimetype.include? 'image'
+
+
 - unless @order.submitted?
   h3 
     | Price: #{number_to_currency @order.price}
