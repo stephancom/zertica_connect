@@ -5,6 +5,7 @@
 $(document).on 'ready page:load', ->
 	$('input#project_file_url').on 'change', (event)->
 		# TODO yeah, not this
+		alert("boo!")
 		if event.originalEvent.fpfile?
 			$('input#asset_title').val(event.originalEvent.fpfile.filename)
 		else

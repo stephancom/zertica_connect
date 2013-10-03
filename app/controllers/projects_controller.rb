@@ -1,7 +1,6 @@
 class ProjectsController < ApplicationController
   load_and_authorize_resource
 
-  before_filter :new_asset, only: :show
   before_filter :new_project_file, only: :show
 
   def create
@@ -20,10 +19,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
-  def new_asset
-    @asset = @project.assets.new
-  end
 
   def new_project_file
     @project_file = @project.project_files.new

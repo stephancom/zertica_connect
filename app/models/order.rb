@@ -14,12 +14,12 @@ class Order < ActiveRecord::Base
 	delegate :name, to: :user, prefix: true
 
 	# TODO
-	# has_and_belongs_to_many :assets
+	# has_and_belongs_to_many :project_files
 	# TODO
-	# validate assets belong to project
+	# validate project_files belong to project
 	# TODO
-	# validate has assets
-	# validates :assets, presence: true
+	# validate has project_files
+	# validates :project_files, presence: true
 
 	include Stateflow
 

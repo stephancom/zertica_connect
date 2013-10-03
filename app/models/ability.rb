@@ -7,7 +7,7 @@ class Ability
         unless user.new_record?
             if user.kind_of? Admin
                 # admins can do this stuff
-                can :manage, [User, Project, Message, Asset, ProjectFile]
+                can :manage, [User, Project, Message, ProjectFile]
                 can [:index, :show, :edit, :update], Order
                 can :estimate, Order, state: 'submitted'
                 can :manage, ActiveChat, admin_id: user.id
@@ -19,12 +19,12 @@ class Ability
                 # clients can do this stuff
                 can [:show, :update], User, id: user.id  # user can always see their own account
                 can :manage, [Project, Message], user_id: user.id
-                can :manage, [Asset, ProjectFile], :project => { :user_id => user.id }
+                can :manage, ProjectFile, :project => { :user_id => user.id }
                 can [:index, :show, :new, :create], Order, project: {user_id: user.id }
                 can :pay, Order, project: {user_id: user.id }, state: 'estimated'
                 # TODO
                 # cannot [:edit, :update, :destroy], Order, state: (Order.available_states - ['submitted'])
-                # TODO cannot destroy asset when attached to active order?
+                # TODO cannot destroy project_file when attached to active order?
             end
         end
 
