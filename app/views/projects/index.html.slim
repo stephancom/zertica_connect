@@ -20,7 +20,7 @@ table
       td = project.deadline
       td = link_to awesome('search', 'Show'), project if can? :show, project
       td = link_to awesome('pencil', 'Edit'), edit_project_path(project) if can? :edit, project
-      td = link_to awesome('trash', 'Destroy'), project, :confirm => 'Are you sure?', :method => :delete if can? :destroy, project
+      td = link_to awesome('trash', 'Destroy'), project, data: {confirm: 'Are you sure?'}, :method => :delete if can? :destroy, project
 
 br
 

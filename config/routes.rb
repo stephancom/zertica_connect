@@ -17,7 +17,7 @@ ZerticaConnect::Application.routes.draw do
 		end
 
 		resources :projects do
-		  resources :assets
+		  resources :project_files, except: [:edit, :update]
 		  # resources :orders
 		end
 
@@ -41,7 +41,7 @@ ZerticaConnect::Application.routes.draw do
 		end
 
 		resources :projects do
-			resources :assets
+			resources :project_files, except: [:edit, :update]
 			# resources :orders
 			resources :orders#, :only => [:new, :create]
 		end
