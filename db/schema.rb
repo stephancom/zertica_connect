@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131003093812) do
+ActiveRecord::Schema.define(version: 20131003115714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,6 +88,15 @@ ActiveRecord::Schema.define(version: 20131003093812) do
   end
 
   add_index "orders", ["project_id"], name: "index_orders_on_project_id", using: :btree
+
+  create_table "orders_project_files", id: false, force: true do |t|
+    t.integer "order_id"
+    t.integer "project_file_id"
+  end
+
+  add_index "orders_project_files", ["order_id", "project_file_id"], name: "index_orders_project_files_on_order_id_and_project_file_id", using: :btree
+  add_index "orders_project_files", ["order_id"], name: "index_orders_project_files_on_order_id", using: :btree
+  add_index "orders_project_files", ["project_file_id"], name: "index_orders_project_files_on_project_file_id", using: :btree
 
   create_table "project_files", force: true do |t|
     t.integer  "project_id", null: false

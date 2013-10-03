@@ -1,6 +1,8 @@
 - unless project_file.new_record?
 	.row
 		.columns.small-2= filepicker_save_button "Download", project_file.url, '', class: :small
-		.columns.small-7= link_to project_file.filename, [project_file.project, project_file]
+		.columns.small-7= link_to project_file.name, [project_file.project, project_file]
 		.columns.small-2= number_to_human_size project_file.size
-		.columns.small-1= link_to awesome('trash', "delete #{project_file.filename}"), [@project, project_file], :confirm => 'Are you sure?', :method => :delete, class: [:button, :small]
+		.columns.small-1= link_to awesome('trash', "delete #{project_file.name}"), [@project, project_file], :confirm => 'Are you sure?', :method => :delete, class: [:button, :small]
+	- if project_file.mimetype.include? 'image'
+		.row= filepicker_image_tag project_file.url, w: 64, h: 64
