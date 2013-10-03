@@ -3,7 +3,9 @@ class CreateProjectFiles < ActiveRecord::Migration
     create_table :project_files do |t|
       t.references :project, index: true, null: false
       t.string :url, null: false
-      t.hstore :data
+      t.string :filename, null: false
+      t.integer :size, null: false
+      t.string :mimetype, null: false
 
       t.timestamps
     end

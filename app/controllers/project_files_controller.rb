@@ -32,6 +32,6 @@ class ProjectFilesController < ApplicationController
   private
 
   def project_file_params
-    params[:project_file].permit(:url, :data)
+    params[:project_file].permit(:url, :filename, :size, :mimetype)
   end
 end

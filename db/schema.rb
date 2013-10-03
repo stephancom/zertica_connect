@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(version: 20131003093812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "hstore"
 
   create_table "active_chats", force: true do |t|
     t.integer  "user_id",    null: false
@@ -93,7 +92,9 @@ ActiveRecord::Schema.define(version: 20131003093812) do
   create_table "project_files", force: true do |t|
     t.integer  "project_id", null: false
     t.string   "url",        null: false
-    t.hstore   "data"
+    t.string   "filename",   null: false
+    t.integer  "size",       null: false
+    t.string   "mimetype",   null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

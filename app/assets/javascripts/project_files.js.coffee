@@ -4,9 +4,11 @@
 
 $(document).on 'ready page:load', ->
 	$('input#project_file_url').on 'change', (event)->
-		# TODO yeah, not this
-		alert("boo!")
 		if event.originalEvent.fpfile?
-			$('input#asset_title').val(event.originalEvent.fpfile.filename)
+			$('input#project_file_filename').val(event.originalEvent.fpfile.filename)
+			$('input#project_file_size').val(event.originalEvent.fpfile.size)
+			$('input#project_file_mimetype').val(event.originalEvent.fpfile.mimetype)
 		else
-			$('input#asset_title').val('')
+			$('input#project_file_filename').val('')
+			$('input#project_file_size').val('')
+			$('input#project_file_mimetype').val('')
