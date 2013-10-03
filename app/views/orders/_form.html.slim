@@ -4,8 +4,7 @@
       .small-3.columns 
         .right Project
       .small-9.columns= @order.project_title
-    -# pick only at start because STI?
-    = f.input :order_type, collection: Order::ORDER_TYPES, as: :radio_buttons
+    = f.input :order_type, collection: Order::ORDER_TYPES, as: :radio_buttons if @order.new_record?
     = f.input :title
     = f.input :description
     -# only changeable by admin
