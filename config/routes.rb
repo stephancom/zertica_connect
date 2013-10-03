@@ -18,6 +18,7 @@ ZerticaConnect::Application.routes.draw do
 
 		resources :projects do
 		  resources :assets
+		  resources :project_files
 		  # resources :orders
 		end
 
@@ -42,6 +43,7 @@ ZerticaConnect::Application.routes.draw do
 
 		resources :projects do
 			resources :assets
+			resources :project_files
 			# resources :orders
 			resources :orders#, :only => [:new, :create]
 		end

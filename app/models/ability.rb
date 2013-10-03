@@ -7,7 +7,7 @@ class Ability
         unless user.new_record?
             if user.kind_of? Admin
                 # admins can do this stuff
-                can :manage, [User, Project, Message, Asset]
+                can :manage, [User, Project, Message, Asset, ProjectFile]
                 can [:index, :show, :edit, :update], Order
                 can :estimate, Order, state: 'submitted'
                 can :manage, ActiveChat, admin_id: user.id
@@ -19,7 +19,7 @@ class Ability
                 # clients can do this stuff
                 can [:show, :update], User, id: user.id  # user can always see their own account
                 can :manage, [Project, Message], user_id: user.id
-                can :manage, Asset, :project => { :user_id => user.id }
+                can :manage, [Asset, ProjectFile], :project => { :user_id => user.id }
                 can [:index, :show, :new, :create], Order, project: {user_id: user.id }
                 can :pay, Order, project: {user_id: user.id }, state: 'estimated'
                 # TODO

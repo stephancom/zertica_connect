@@ -10,6 +10,14 @@
 		= render @project.assets
 		h4 add a file
 		= render 'assets/form'
+
+		hr
+
+		h2 files v2
+		= render @project.project_files
+		h4 add a file
+		= render 'project_files/form'
+		
 	.columns.small-3
 		h2 spec
 		= simple_format h(@project.spec)
