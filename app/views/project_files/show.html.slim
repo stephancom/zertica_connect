@@ -1,15 +1,19 @@
-p#notice = notice
+h1 
+	| Project: 
+	= link_to_if can?(:show, @project_file.project), @project_file.project_title, @project_file.project
 
-p
-  strong Project:
-  = @project_file.project
-p
-  strong Url:
-  = @project_file.url
-p
-  strong Data:
-  = @project_file.data
+h2 File: #{@project_file.filename}
 
-= link_to 'Edit', edit_project_file_path(@project_file)
-'|
-= link_to 'Back', project_files_path
+h3 
+	| Size:
+	= number_to_human_size @project_file.size
+
+h3 
+	| Type:
+	= @project_file.mimetype
+
+p= filepicker_save_button "Download", @project_file.url, ''
+
+p= filepicker_image_tag @project_file.url if @project_file.mimetype.include? 'image'
+
+p= link_to 'Back', @project_file.project, class: :button
