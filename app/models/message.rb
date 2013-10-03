@@ -6,7 +6,7 @@ class Message < ActiveRecord::Base
   validates :body, presence: true
   # validate user owns project or is admin?
 
-  default_scope order('created_at ASC').includes(:user, :admin)
+  default_scope {order('created_at ASC').includes(:user, :admin)}
   scope :bookmarked, -> { where(bookmark: true) }
 
   delegate :name, to: :admin, prefix: true, allow_nil: true
