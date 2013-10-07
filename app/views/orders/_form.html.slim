@@ -10,7 +10,7 @@
     = f.input :title
     = f.input :description
     -# only changeable by admin
-    = f.input :price if can?(:estimate, @order)
+    = f.input :price if can?(:estimate, @order) and !@order.new_record?
     -# doesn't show until completed state and never if cad
     = f.input :tracking_number if can?(:ship, @order)
     = f.button :submit

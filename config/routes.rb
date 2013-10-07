@@ -18,7 +18,7 @@ ZerticaConnect::Application.routes.draw do
 
 		resources :projects do
 		  resources :project_files, except: [:edit, :update]
-		  # resources :orders
+		  resources :orders
 		end
 
 		resources :orders do
