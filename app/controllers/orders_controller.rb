@@ -98,7 +98,11 @@ private
   def order_params
     case action_name
     when 'create'
-      params[:order].permit(:order_type, :title, :description, project_file_ids: [])
+      if current_admin
+        params[:order].permit(:order_type, :title, :description, :price, project_file_ids: [])
+      else
+        params[:order].permit(:order_type, :title, :description, project_file_ids: [])
+      end
     when 'estimate'
       params[:order].permit(:price)
     when 'pay'
