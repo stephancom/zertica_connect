@@ -8,7 +8,7 @@ class Ability
             if user.kind_of? Admin
                 # admins can do this stuff
                 can :manage, [User, Project, Message, ProjectFile]
-                can [:index, :show, :edit, :update], Order
+                can [:index, :new, :create, :show, :edit, :update], Order
                 can :estimate, Order, state: 'submitted'
                 can :manage, ActiveChat, admin_id: user.id
                 can :pay, Order, state: 'estimated'
