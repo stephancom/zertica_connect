@@ -1,61 +1,95 @@
-h1
-  - if @order.order_type == 'CadOrder'
-    | CAD
-  - else
-    | Print
-  |  Order: #{@order.title}
+.row
+  .columns.large-4
+    h1
+      - if @order.order_type == 'CadOrder'
+        | CAD order:
+      - else
+        | Print order:
+  .columns.large-8
+    h1= @order.title
 
-h2 project: #{link_to_if can?(:show, @order.project), @order.project_title, @order.project}
+hr
 
-p
-  h2 status: #{@order.state.capitalize}
+.row
+  .columns.large-4
+    h2 status:
+  .columns.large-8
+    h2= @order.state.capitalize
 
-  - if can? :estimate, @order
-    .small-9.columns.small-offset-3
-      h3 Estimate
-    = simple_form_for @order, url: [:estimate, @order] do |f|
-      = f.input :price
-      .small-3.columns.small-offset-9= f.button :submit, 'Estimate'
-
-  = link_to 'Mark complete', [:complete, @order], method: :put, class: :button if can? :complete, @order
-  = link_to 'Archive', archive_order_path(@order), class: :button if can? :archive, @order
+.row
+  .columns.large-4
+    h2 project: 
+  .columns.large-8
+    h2= link_to_if can?(:show, @order.project), @order.project_title, @order.project
 
 - unless @order.description.blank?
-  h3 Details:
-  p= @order.description
+  .row
+    .columns.large-8.large-offset-4= @order.description
 
-h3 Files
-ul
-  - @order.project_files.each do |file|
-    li
-      = link_to_if can?(:show, file), file.name, [@order.project, file]
-      = filepicker_image_tag file.url, w: 64, h: 64 if file.mimetype.include? 'image'
+.row
+  .columns.large-4
+    h2 files:
+  .columns.large-8
+    ul
+      - @order.project_files.each do |file|
+        li
+          = link_to_if can?(:show, file), file.name, [@order.project, file]
+          = filepicker_image_tag file.url, w: 64, h: 64 if file.mimetype.include? 'image'
 
+hr
 
-- unless @order.submitted?
-  h3 
-    | Price: #{number_to_currency @order.price}
-  - if can? :pay, @order
-    .small-9.columns.small-offset-3
-      h3 Pay
-    = simple_form_for @order, url: [:pay, @order] do |f|
-      = f.input :confirmation, hint: 'check number, notes, or confirmation number'
-      .small-3.columns.small-offset-9= f.button :submit, 'Pay Now'
-  - if @order.payment_processed?
-    h3 Paid: #{@order.confirmation}
+.row
+  .columns.large-4
+    h2 estimate:
+  .columns.large-8
+    - if can? :estimate, @order
+      p= simple_form_for @order, url: [:estimate, @order] do |f|
+        = f.input :price
+        .small-3.columns.small-offset-9= f.button :submit, 'Estimate'
+    - elsif @order.submitted?
+      no estimate yet
+    - else
+      h3= number_to_currency @order.price
+
+- if can? :pay, @order
+  .row
+    .columns.large-4
+      h2 pay now:
+    .columns.large-8
+      = simple_form_for @order, url: [:pay, @order] do |f|
+        = f.input :confirmation, hint: 'check number, notes, or confirmation number'
+        .small-3.columns.small-offset-9= f.button :submit, 'Pay Now'
+
+- if @order.payment_processed?
+  .row
+    .columns.large-4
+      h2 Paid!
+    .columns.large-8
+      h3= @order.confirmation
+
+.row
+  .columns.large-8.large-offset-4
+    = link_to 'Mark complete', [:complete, @order], method: :put, class: :button if can? :complete, @order
+    = link_to 'Archive', archive_order_path(@order), class: :button if can? :archive, @order
 
 - if can? :ship, @order
-    .small-9.columns.small-offset-3
-      h3 Ship
-    = simple_form_for @order, url: [:ship, @order] do |f|
-      = f.input :carrier, collection: Order::CARRIERS
-      = f.input :tracking_number
-      .small-3.columns.small-offset-9= f.button :submit, 'Ship'
+  .row
+    .columns.large-4
+      h2 ship:
+    .columns.large-8
+      = simple_form_for @order, url: [:ship, @order] do |f|
+        = f.input :carrier, collection: Order::CARRIERS
+        = f.input :tracking_number
+        .small-3.columns.small-offset-9= f.button :submit, 'Ship'
 
 - if @order.shipped?
-  h3 
-    | Tracking number: 
-    = link_to @order.tracking_number, '#'
+  .row
+    .columns.large-4
+      h2 shipped:
+    .columns.large-8
+      h4 
+        | Tracking number: 
+        = link_to @order.tracking_number, '#'
 
 = link_to 'Edit', edit_project_order_path(@order.project, @order)
 '|
