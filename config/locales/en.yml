@@ -23,3 +23,6 @@ en:
   activerecord:
     models:
       project_file: File
+  users:
+    index:
+      confirm: "Are you sure?  This will also destroy ALL projects and files associated with the user!!!"

@@ -1,5 +1,17 @@
-h1 #{@user.name}
+.page-header
+	h1 #{@user.name}
 
-- if @user.projects.empty?
-	h2 No projects
-ul= render @user.projects
+.row-fluid
+	.span3
+		h2 Projects
+	.span9
+		- if @user.projects.empty?
+			h2 None
+		ul.unstyled= render @user.projects
+.row-fluid
+	.span3
+		h2 Orders
+	.span9
+		- if @user.orders.empty?
+			h2 None
+		ul.unstyled= render @user.orders
