@@ -1,6 +1,3 @@
-section id=dom_id(active_chat)
-	p.title.chat-tab data-section-title=true
-		= link_to active_chat.name, dom_id(active_chat.user, :messages)
-		= link_to awesome('remove'), active_chat, method: :delete, remote: true
-	.content data-section-content=true
-		= render 'messages/messages_panel', user: active_chat.user
+.tab-pane id=dom_id(active_chat)
+	p= link_to 'Close chat', active_chat, method: :delete, remote: true, class: :btn
+	= render 'messages/messages_panel', user: active_chat.user

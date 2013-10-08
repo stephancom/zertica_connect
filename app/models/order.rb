@@ -9,6 +9,7 @@ class Order < ActiveRecord::Base
 	validates :order_type, presence: true, inclusion: { in: ORDER_TYPES }
 	validates :project, presence: true
 	validates :price, numericality: { greater_than: 0 }, allow_nil: true
+	validates :project_files, presence: true
 
 	delegate :title, to: :project, prefix: true
 	delegate :name, to: :user, prefix: true

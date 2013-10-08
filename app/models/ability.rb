@@ -14,6 +14,7 @@ class Ability
                 can :pay, Order, state: 'estimated'
                 can :complete, Order, state: 'production'
                 can :ship, Order, state: 'completed'
+                can :archive, Order, state: 'shipped'
                 cannot :destroy, Admin, id: user.id
             else
                 # clients can do this stuff

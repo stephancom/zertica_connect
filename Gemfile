@@ -14,7 +14,11 @@ gem 'devise'
 gem 'figaro'
 gem 'pg'
 gem 'simple_form', '>= 3.0.0.rc'
-gem 'zurb-foundation'
+
+# Bootstrap
+gem "therubyracer"
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails"
 
 # yet more
 gem 'high_voltage'
