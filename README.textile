@@ -40,7 +40,7 @@ h2. Development
 
 * Template Engine: Slim
 * Testing Framework: RSpec and Factory Girl
-* Front-end Framework: Zurb Foundation
+* Front-end Framework: Bootstrap
 * Form Builder: SimpleForm
 * Authentication: Devise
 * Authorization: CanCan
