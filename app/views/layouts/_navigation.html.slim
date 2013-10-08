@@ -1,28 +1,29 @@
-nav.top-bar
-  ul.title-area
-    li.name
-      h1= link_to "Zertica", root_path, :class => 'brand'
-    li.toggle-topbar.menu-icon
-      a
-        span Menu
-  section.top-bar-section
-    ul.right
-      - if admin_signed_in?
-        li.admin
-          a Admin:
-        li= link_to 'Users', users_path if can? :index, User
-        li= link_to 'Messages', active_chats_path if can? :index, ActiveChat
-        li= link_to 'Projects', projects_path if can? :index, Project
-        li= link_to 'Orders', orders_path if can? :index, Order
-        li= link_to "Account #{current_admin.name}", edit_admin_registration_path
-        li= link_to 'Logout', destroy_admin_session_path, :method=>'delete'
-      - elsif user_signed_in?
-        li= link_to 'Projects', projects_path if can? :index, Project
-        li= link_to 'Messages', messages_path if can? :index, Message
-        li= link_to 'Orders', orders_path if can? :index, Order
-        li= link_to "Account #{current_user.name}", edit_user_registration_path
-        li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
-      - else
-        li= link_to 'Login', new_user_session_path
-        li= link_to 'Sign up', new_user_registration_path
-        li= link_to 'Admin', new_admin_session_path
+.navbar.navbar-fluid-top
+  .navbar-inner
+    .container-fluid
+      a.btn.btn-navbar data-target=".nav-collapse" data-toggle="collapse"
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      = link_to "Zertica", root_path, :class => 'brand'
+      .container-fluid.nav-collapse
+        ul.nav
+          - if admin_signed_in?
+            li.admin
+              a Admin:
+            li= link_to 'Users', users_path if can? :index, User
+            li= link_to 'Messages', active_chats_path if can? :index, ActiveChat
+            li= link_to 'Projects', projects_path if can? :index, Project
+            li= link_to 'Orders', orders_path if can? :index, Order
+            li= link_to "Account #{current_admin.name}", edit_admin_registration_path
+            li= link_to 'Logout', destroy_admin_session_path, :method=>'delete'
+          - elsif user_signed_in?
+            li= link_to 'Projects', projects_path if can? :index, Project
+            li= link_to 'Messages', messages_path if can? :index, Message
+            li= link_to 'Orders', orders_path if can? :index, Order
+            li= link_to "Account #{current_user.name}", edit_user_registration_path
+            li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+          - else
+            li= link_to 'Login', new_user_session_path
+            li= link_to 'Sign up', new_user_registration_path
+            li= link_to 'Admin', new_admin_session_path

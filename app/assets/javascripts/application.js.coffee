@@ -13,7 +13,7 @@
 #= require jquery
 #= require jquery.turbolinks
 #= require jquery_ujs
-#= require foundation
+#= require twitter/bootstrap
 #= require private_pub
 #= require turbolinks
 #= require_tree .
