@@ -1,96 +1,95 @@
-.row
-  .columns.large-4
-    h1
-      - if @order.order_type == 'CadOrder'
-        | CAD order:
-      - else
-        | Print order:
-  .columns.large-8
-    h1= @order.title
+.page-header
+  h1
+    - if @order.order_type == 'CadOrder'
+      | CAD order: 
+    - else
+      | Print order: 
+    = @order.title
 
-hr
-
-.row
-  .columns.large-4
-    h2 status:
-  .columns.large-8
-    h2= @order.state.capitalize
-
-.row
-  .columns.large-4
-    h2 project: 
-  .columns.large-8
-    h2= link_to_if can?(:show, @order.project), @order.project_title, @order.project
+.row-fluid
+  .span12
+    h5 
+      | project:  
+      = link_to_if can?(:show, @order.project), @order.project_title, @order.project
 
 - unless @order.description.blank?
-  .row
-    .columns.large-8.large-offset-4= @order.description
+  .row-fluid
+    .span12= @order.description
 
-.row
-  .columns.large-4
-    h2 files:
-  .columns.large-8
-    ul
-      - @order.project_files.each do |file|
-        li
-          = link_to_if can?(:show, file), file.name, [@order.project, file]
-          = filepicker_image_tag file.url, w: 64, h: 64 if file.mimetype.include? 'image'
+- content_for :sidebar do
+  ul.nav.nav-list
+    li.nav-header Files
+    - @order.project_files.each do |file|
+      li
+        = link_to_if can?(:show, file), file.name, [@order.project, file]
+        = filepicker_image_tag file.url, w: 24, h: 24 if file.mimetype.include? 'image'
 
-hr
+.row-fluid
+  .span4
+    h2 status:
+  .span8
+    h2= @order.state.capitalize
 
-.row
-  .columns.large-4
-    h2 estimate:
-  .columns.large-8
+.row-fluid
+  .span4
+    h3 estimate:
+  .span8
     - if can? :estimate, @order
-      p= simple_form_for @order, url: [:estimate, @order] do |f|
-        = f.input :price
-        .small-3.columns.small-offset-9= f.button :submit, 'Estimate'
+      = simple_form_for @order, url: [:estimate, @order], :html => { :class => "form-horizontal" } do |f|
+        .form-inputs= f.input :price
+        .form-actions= f.button :submit, 'Save Estimate', :class => 'btn-primary'
     - elsif @order.submitted?
-      no estimate yet
+      h3 no estimate yet
     - else
       h3= number_to_currency @order.price
 
 - if can? :pay, @order
-  .row
-    .columns.large-4
-      h2 pay now:
-    .columns.large-8
-      = simple_form_for @order, url: [:pay, @order] do |f|
-        = f.input :confirmation, hint: 'check number, notes, or confirmation number'
-        .small-3.columns.small-offset-9= f.button :submit, 'Pay Now'
+  .row-fluid
+    .span4
+      h3 pay now:
+    .span8
+      = simple_form_for @order, url: [:pay, @order], :html => { :class => "form-horizontal" } do |f|
+        .form-inputs= f.input :confirmation, hint: 'check number, notes, or confirmation number'
+        .form-actions= f.button :submit, 'Pay Now', :class => 'btn-primary'
 
 - if @order.payment_processed?
-  .row
-    .columns.large-4
-      h2 Paid!
-    .columns.large-8
+  .row-fluid
+    .span4
+      h3 Paid!
+    .span8
       h3= @order.confirmation
 
-.row
-  .columns.large-8.large-offset-4
-    = link_to 'Mark complete', [:complete, @order], method: :put, class: :button if can? :complete, @order
-    = link_to 'Archive', archive_order_path(@order), class: :button if can? :archive, @order
+.row-fluid
+  .span8.offset4
 
 - if can? :ship, @order
-  .row
-    .columns.large-4
-      h2 ship:
-    .columns.large-8
-      = simple_form_for @order, url: [:ship, @order] do |f|
-        = f.input :carrier, collection: Order::CARRIERS
-        = f.input :tracking_number
-        .small-3.columns.small-offset-9= f.button :submit, 'Ship'
+  .row-fluid
+    .span4
+      h3 ship:
+    .span8
+      = simple_form_for @order, url: [:ship, @order], :html => { :class => "form-horizontal" } do |f|
+        .form-inputs
+          = f.input :carrier, collection: Order::CARRIERS
+          = f.input :tracking_number
+        .form-actions= f.button :submit, 'Ship'
 
 - if @order.shipped?
-  .row
-    .columns.large-4
-      h2 shipped:
-    .columns.large-8
+  .row-fluid
+    .span4
+      h3 shipped:
+    .span8
       h4 
         | Tracking number: 
         = link_to @order.tracking_number, '#'
 
-= link_to 'Edit', edit_project_order_path(@order.project, @order)
-'|
-= link_to 'Back', @order.project
+.form-actions
+  = link_to 'Mark complete', [:complete, @order], method: :put, :class => 'btn btn-primary' if can? :complete, @order
+  '
+  = link_to 'Archive', archive_order_path(@order), :class => 'btn btn-primary' if can? :archive, @order
+  '
+  = link_to t('.back', :default => t("helpers.links.back")), @order.project, :class => 'btn'
+  '
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_order_path(@order), :class => 'btn' if can? :edit, @order
+  '
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), order_path(@order), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, @order
+
