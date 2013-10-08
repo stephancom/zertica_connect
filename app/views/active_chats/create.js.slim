@@ -1,4 +1,4 @@
+| $('#active-chats-tabs').append("#{j render('active_chat_tab', active_chat_tab: @active_chat)}");
 | $('#active-chats').append("#{j render(@active_chat)}");
-| $(document).foundation('section', 'reflow');
-| $("##{dom_id(@active_chat)} p.chat-tab").click();
-| $("##{dom_id(@active_chat.user, :chat_toggle)}").hide('fast')
+| $("##{dom_id(@active_chat, :tab)} a").tab('show');
+| $("##{dom_id(@active_chat.user, :chat_toggle)}").hide('fast');

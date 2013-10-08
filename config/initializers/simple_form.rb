@@ -45,6 +45,24 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :span, class: :error }
   end
 
+  config.wrappers :minimal, class: 'input row-fluid', hint_class: :field_with_hint, error_class: :error do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :pattern
+    b.optional :min_max
+    b.optional :readonly
+    # b.use :label_input
+    b.use :error, wrap_with: { tag: :small }
+
+    b.use :input, wrap_with: { tag: :div, class: "span12"}
+
+    # Uncomment the following line to enable hints. The line is commented out by default since Foundation
+    # does't provide styles for hints. You will need to provide your own CSS styles for hints.
+    # b.use :hint,  wrap_with: { tag: :span, class: :hint }
+  end
+
+
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
 

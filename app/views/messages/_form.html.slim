@@ -5,6 +5,6 @@
 = minimal_form_for form_path, :remote => true do |f|
   = f.error_notification
   = f.input :body, placeholder: 'Start typing here, press enter to send'
-  .row
-    .small-9.columns.small-offset-3
-      = f.button :submit, class: :right, id: :message_send, data: {disable_with: 'Posting...'}
+  .row-fluid
+    .span9.offset3
+      = f.button :submit, class: 'btn right', id: :message_send, data: {disable_with: 'Posting...'}
