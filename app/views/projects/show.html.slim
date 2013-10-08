@@ -5,9 +5,9 @@
   / =t '.title', :default => model_class.model_name.human.titleize
 
 .row-fluid
-  .span3
+  .span6
     h5 client: #{link_to_if can?(:show, @project.user), @project.user_name, @project.user}
-  .span9
+  .span6
     h5 deadline: #{@project.deadline}
 
 .row-fluid
@@ -48,7 +48,7 @@
             td= f.button :submit
             td
 
-- content_for :sidebar
+- content_for :sidebar do
   ul.nav.nav-list
     li.nav-header Orders
     = render @project.orders
