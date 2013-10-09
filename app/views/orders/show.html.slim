@@ -1,10 +1,5 @@
 .page-header
-  h1
-    - if @order.order_type == 'CadOrder'
-      | CAD order: 
-    - else
-      | Print order: 
-    = @order.title
+  h1 #{@order.human_order_type}: #{@order.title}
 
 .row-fluid
   .span12

@@ -1,5 +1,16 @@
 class Order < ActiveRecord::Base
 	ORDER_TYPES = %w(CadOrder PrintOrder)
+
+	def cad_order?
+		order_type == 'CadOrder'
+	end
+	def print_order?
+		!cad_order?
+	end
+	def human_order_type
+		cad_order? ? 'CAD Order' : 'Print Order'
+	end
+
 	CARRIERS = [:fedex, :usps, :ups, :other]
 
 	belongs_to :project
