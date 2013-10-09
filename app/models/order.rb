@@ -5,22 +5,18 @@ class Order < ActiveRecord::Base
 	belongs_to :project
 	has_one :user, through: :project
 
+	has_and_belongs_to_many :project_files
+
 	validates :title, presence: true
 	validates :order_type, presence: true, inclusion: { in: ORDER_TYPES }
 	validates :project, presence: true
 	validates :price, numericality: { greater_than: 0 }, allow_nil: true
+	# TODO
+	# validate project_files belong to project
 	validates :project_files, presence: true
 
 	delegate :title, to: :project, prefix: true
 	delegate :name, to: :user, prefix: true
-
-	# TODO
-	has_and_belongs_to_many :project_files
-	# TODO
-	# validate project_files belong to project
-	# TODO
-	# validate has project_files
-	# validates :project_files, presence: true
 
 	include Stateflow
 
