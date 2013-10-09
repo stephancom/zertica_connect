@@ -110,7 +110,7 @@ private
     when 'complete'
       params[:order].permit()
     when 'ship'
-      params[:order].permit(:carrier, :tracking_number)
+      params[:order].permit(:carrier, :tracking_number, shippable_file_ids: [])
     else      
       params[:order].permit(:title, :description, project_file_ids: [])
     end

@@ -1,10 +1,5 @@
 .page-header
-  h1
-    - if @order.order_type == 'CadOrder'
-      | CAD order: 
-    - else
-      | Print order: 
-    = @order.title
+  h1 #{@order.human_order_type}: #{@order.title}
 
 .row-fluid
   .span12
@@ -68,19 +63,23 @@
       h3 ship:
     .span8
       = simple_form_for @order, url: [:ship, @order], :html => { :class => "form-horizontal" } do |f|
-        .form-inputs
-          = f.input :carrier, collection: Order::CARRIERS
-          = f.input :tracking_number
-        .form-actions= f.button :submit, 'Ship'
+        .form-inputs= render 'ship_fields', f: f, project: @order.project
+        .form-actions= f.button :submit, 'Ship', :class => 'btn-primary'
 
 - if @order.shipped?
   .row-fluid
     .span4
       h3 shipped:
     .span8
-      h4 
-        | Tracking number: 
-        = link_to @order.tracking_number, '#'
+      - if @order.cad_order?
+        h4 Files: 
+        ul
+          - @order.shippable_files.each do |file|
+            li= link_to_if can?(:show, file), file.name, [@order.project, file]
+      - else
+        h4
+          | Tracking number: 
+          = link_to @order.tracking_number, '#'
 
 .form-actions
   = link_to 'Mark complete', [:complete, @order], method: :put, :class => 'btn btn-primary' if can? :complete, @order
