@@ -71,7 +71,7 @@
         .form-inputs
           = f.input :carrier, collection: Order::CARRIERS
           = f.input :tracking_number
-        .form-actions= f.button :submit, 'Ship'
+        .form-actions= f.button :submit, 'Ship', :class => 'btn-primary'
 
 - if @order.shipped?
   .row-fluid
