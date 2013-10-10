@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
-  load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
   before_filter :load_project, except: :confirm_payment
+  load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
 
   def create
     @order = @project.orders.new(params[:order])
