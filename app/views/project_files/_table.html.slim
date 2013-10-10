@@ -10,7 +10,7 @@ table.table.table-striped
     - collection.each do |project_file|
       - unless project_file.new_record?
         tr
-          td= filepicker_image_tag project_file.url, w: 32, h: 32 if project_file.mimetype.include? 'image'
+          td= filepicker_image_tag project_file.url, w: 96, h: 96 if project_file.mimetype.include? 'image'
           td= link_to project_file.name, [project_file.project, project_file]
           td= number_to_human_size project_file.size
           td
