@@ -25,10 +25,12 @@ class Ability
                 can :pay, Order, project: {user_id: user.id }, state: 'estimated'
                 # TODO
                 # cannot [:edit, :update, :destroy], Order, state: (Order.available_states - ['submitted'])
-                # TODO cannot destroy project_file when attached to active order?
             end
         end
 
         cannot [:edit, :update], Order, state: 'archived'
+        cannot :destroy, ProjectFile do |file|
+            file.orders.any? or file.shipped_orders.any?
+        end
     end
 end
