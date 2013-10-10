@@ -1,29 +1,24 @@
 .page-header
+  h5 
+    | project:  
+    = link_to_if can?(:show, @order.project), @order.project_title, @order.project
   h1 #{@order.human_order_type}: #{@order.title}
-
-.row-fluid
-  .span12
-    h5 
-      | project:  
-      = link_to_if can?(:show, @order.project), @order.project_title, @order.project
 
 - unless @order.description.blank?
   .row-fluid
     .span12= @order.description
 
-- content_for :sidebar do
-  ul.nav.nav-list
-    li.nav-header Files
-    - @order.project_files.each do |file|
-      li
-        = link_to_if can?(:show, file), file.name, [@order.project, file]
-        = filepicker_image_tag file.url, w: 24, h: 24 if file.mimetype.include? 'image'
-
 .row-fluid
-  .span4
-    h2 status:
-  .span8
-    h2= @order.state.capitalize
+  .span10.offset1
+    h4 Associated files
+    = render 'project_files/table', collection: @order.project_files
+
+.well.well-sm
+  .row-fluid
+    .span4
+      h2 status:
+    .span8
+      h2= @order.state.capitalize
 
 .row-fluid
   .span4
@@ -71,15 +66,14 @@
 
 - if @order.shipped?
   .row-fluid
-    .span4
-      h3 shipped:
-    .span8
-      - if @order.cad_order?
-        h4 Files: 
-        ul
-          - @order.shippable_files.each do |file|
-            li= link_to_if can?(:show, file), file.name, [@order.project, file]
-      - else
+    - if @order.cad_order?
+      .span10.offset1
+        h4 Shipped Files: 
+        = render 'project_files/table', collection: @order.shippable_files
+    - else
+      .span4
+        h3 shipped:
+      .span8
         h4
           | Tracking number: 
           = link_to @order.tracking_number, '#'
