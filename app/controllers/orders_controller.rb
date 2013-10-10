@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
-  before_filter :load_project, except: :confirm_payment
   load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
+  before_filter :load_project, except: :confirm_payment
 
   def create
     @order = @project.orders.new(params[:order])
@@ -67,6 +67,7 @@ class OrdersController < ApplicationController
 private
   def load_project
     @project ||= Project.find(params[:project_id]) if params.has_key? :project_id
+    @project ||= @order.project if @order
   end
 
   def order_params
