@@ -51,5 +51,7 @@ ZerticaConnect::Application.routes.draw do
 		root to: 'projects#index', as: :user_root
 	end
 
+	match 'order_confirm_payment' => 'orders#confirm_payment', :as => :order_confirm_payment, :via => :get
+
 	root to: 'home#index', as: :root
 end

@@ -43,9 +43,12 @@
     .span4
       h3 pay now:
     .span8
-      = simple_form_for @order, url: [:pay, @order], :html => { :class => "form-horizontal" } do |f|
-        .form-inputs= f.input :confirmation, hint: 'check number, notes, or confirmation number'
-        .form-actions= f.button :submit, 'Pay Now', :class => 'btn-primary'
+      - if current_admin
+        = simple_form_for @order, url: [:pay, @order], :html => { :class => "form-horizontal" } do |f|
+          .form-inputs= f.input :confirmation, hint: 'check number, notes, or confirmation number'
+          .form-actions= f.button :submit, 'Pay Now', :class => 'btn-primary'
+      - else
+        = render 'credit_card_form'
 
 - if @order.payment_processed?
   .row-fluid
