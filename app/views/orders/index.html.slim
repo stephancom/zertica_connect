@@ -20,7 +20,7 @@ table.table.table-striped
         td = link_to_if can?(:show, order.project), order.project_title, order.project
         td = order.state.titleize
         td = number_to_currency(order.price) || '--'
-        td = order.tracking_number || '--'
+        td = order.cad_order? ? 'n/a' : (order.tracking_number || '--')
         td 
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_order_path(order.project, order), :class => 'btn btn-mini' if can? :edit, order
           '
