@@ -15,46 +15,18 @@
 		h5 spec
 	.span11
 		= simple_format h(@project.spec)
+
 .row-fluid
   .span12
-    h2 files
-    table.table.table-striped
-      thead
-        tr
-          th
-          th= model_class.human_attribute_name(:filename)
-          th= model_class.human_attribute_name(:size)
-          th=t '.actions', :default => t("helpers.actions")
-      tbody
-        - @project.project_files.each do |project_file|
-          - unless project_file.new_record?
-            tr
-              td= filepicker_image_tag project_file.url, w: 32, h: 32 if project_file.mimetype.include? 'image'
-              td= link_to project_file.name, [project_file.project, project_file]
-              td= number_to_human_size project_file.size
-              td
-                = filepicker_save_button "Download", project_file.url, '', class: :btn
-                = link_to t('.destroy', :default => t("helpers.links.destroy")), [@project, project_file], :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, project_file
-      tfoot
-        tr
-          = simple_form_for [@project, @project_file] do |f|
-            td
-            td
-              = f.error_notification
-              = f.filepicker_field :url, dragdrop: true, drag_class: :picker_drag
-              = f.input :filename, as: :hidden
-              = f.input :size, as: :hidden
-              = f.input :mimetype, as: :hidden
-            td= f.button :submit
-            td
-
-- content_for :sidebar do
-  ul.nav.nav-list
-    li.nav-header Orders
-    = render @project.orders
-    li= link_to 'Place Order', new_project_order_path(@project), class: :btn if can?(:create, @project.orders.build)
+    ul.nav.nav-tabs
+      li.active= link_to 'Orders', "#orders", :data => {:toggle => :tab}
+      li= link_to 'Files', "#files", :data => {:toggle => :tab}
+    .tab-content
+      .tab-pane.active#orders= render 'orders/table', collection: @project.orders
+      .tab-pane#files= render 'project_files/table', collection: @project.project_files
 
 .form-actions
+  = link_to 'Place Order', new_project_order_path(@project), class: 'btn btn-primary' if can?(:create, @project.orders.build)
   = link_to t('.back', :default => t("helpers.links.back")), projects_path, :class => 'btn'
   '
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_path(@project), :class => 'btn' if can? :edit, @project
