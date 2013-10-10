@@ -15,7 +15,7 @@ table.table.table-striped
           td= number_to_human_size project_file.size
           td
             = filepicker_save_button "Download", project_file.url, '', class: :btn
-            = link_to t('.destroy', :default => t("helpers.links.destroy")), [@project, project_file], :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, project_file
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), [@project, project_file], :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if @project and can?(:destroy, project_file)
   - if @project and @project_file
 	  tfoot
 	    tr
