@@ -35,6 +35,32 @@ h4. Paid accounts needed
 * Amazon S3
 * Mandrill _(optional - free starter level allows 12,000 emails per month)_
 * Ink Filepicker _(optional - free starter level allows 5,000 files per month; currently in beta)_
+* Braintree
+
+for several of these, you need to set up environment variables on Heroku
+
+FILEPICKER_API_KEY
+FILEPICKER_API_SECRET
+
+MANDRILL_USERNAME
+MANDRILL_API_KEY
+
+BRAINTREE_MERCHANT_ID
+BRAINTREE_PUBLIC_KEY
+BRAINTREE_PRIVATE_KEY
+BRAINTREE_CLIENT_SIDE_ENCRYPTION_KEY
+
+For Braintree, when you're ready to take credit cards for real, you'll want to change :sandbox in braintree.rb to :production
+
+For braintree, you also need to configure a custom field of 'order_id' so we can identify which order a payment is associated with.  You do this in the Braintree control panel, 'settings' in the top bar, green button about halfway down
+
+Your S3 key has to be configured in your Ink Filepicker account
+
+if you use rake db:seed to set up the initial admin account, you'll need to set:
+
+ADMIN_NAME
+ADMIN_EMAIL
+ADMIN_PASSWORD
 
 h2. Development
 
@@ -64,6 +90,17 @@ bc.. # in ~/.bash_login
   # in ~/.filepicker_keys
   export FILEPICKER_API_KEY='XYZXYZ'
   export FILEPICKER_API_SECRET='XYZXYZ'
+
+h4. application.yml
+
+Actually, I don't do that for filepicker any more.  You CAN set all those things up with environment variables (see above for list), but it's easier to create an application.yml file.  copy application.yml.sample (in the repo) to application.yml and fill in the right values.
+
+AND DO NOT ADD APPLICATION.YML TO THE REPOSITORY!!!! EVER!!!!
+DO NOT EVER PUT KEYS IN THE REPOSITORY!!!! EVER!!!!
+
+h4. braintree
+
+In testing, you use special credit card numbers, amounts, and other codes to simulate successful/failing transactions.  Reference here: https://www.braintreepayments.com/docs/ruby/reference/sandbox
 
 h2. History
 

@@ -11,4 +11,12 @@ class User < ActiveRecord::Base
 	def message_channel
 		"/messages/new/#{id}"
 	end
+
+	def first_name
+		name.split(' ').first
+	end
+
+	def last_name
+		name.split(' ').last
+	end
 end

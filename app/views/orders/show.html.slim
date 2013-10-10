@@ -1,10 +1,5 @@
 .page-header
-  h1
-    - if @order.order_type == 'CadOrder'
-      | CAD order: 
-    - else
-      | Print order: 
-    = @order.title
+  h1 #{@order.human_order_type}: #{@order.title}
 
 .row-fluid
   .span12
@@ -48,9 +43,12 @@
     .span4
       h3 pay now:
     .span8
-      = simple_form_for @order, url: [:pay, @order], :html => { :class => "form-horizontal" } do |f|
-        .form-inputs= f.input :confirmation, hint: 'check number, notes, or confirmation number'
-        .form-actions= f.button :submit, 'Pay Now', :class => 'btn-primary'
+      - if current_admin
+        = simple_form_for @order, url: [:pay, @order], :html => { :class => "form-horizontal" } do |f|
+          .form-inputs= f.input :confirmation, hint: 'check number, notes, or confirmation number'
+          .form-actions= f.button :submit, 'Pay Now', :class => 'btn-primary'
+      - else
+        = render 'credit_card_form'
 
 - if @order.payment_processed?
   .row-fluid
@@ -68,19 +66,23 @@
       h3 ship:
     .span8
       = simple_form_for @order, url: [:ship, @order], :html => { :class => "form-horizontal" } do |f|
-        .form-inputs
-          = f.input :carrier, collection: Order::CARRIERS
-          = f.input :tracking_number
-        .form-actions= f.button :submit, 'Ship'
+        .form-inputs= render 'ship_fields', f: f, project: @order.project
+        .form-actions= f.button :submit, 'Ship', :class => 'btn-primary'
 
 - if @order.shipped?
   .row-fluid
     .span4
       h3 shipped:
     .span8
-      h4 
-        | Tracking number: 
-        = link_to @order.tracking_number, '#'
+      - if @order.cad_order?
+        h4 Files: 
+        ul
+          - @order.shippable_files.each do |file|
+            li= link_to_if can?(:show, file), file.name, [@order.project, file]
+      - else
+        h4
+          | Tracking number: 
+          = link_to @order.tracking_number, '#'
 
 .form-actions
   = link_to 'Mark complete', [:complete, @order], method: :put, :class => 'btn btn-primary' if can? :complete, @order
@@ -89,7 +91,7 @@
   '
   = link_to t('.back', :default => t("helpers.links.back")), @order.project, :class => 'btn'
   '
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_order_path(@order), :class => 'btn' if can? :edit, @order
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_order_path(@order.project, @order), :class => 'btn' if can? :edit, @order
   '
   = link_to t('.destroy', :default => t("helpers.links.destroy")), order_path(@order), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, @order
 

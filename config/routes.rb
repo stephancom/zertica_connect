@@ -13,7 +13,6 @@ ZerticaConnect::Application.routes.draw do
 			resources :messages, except: [:edit, :update, :destroy] do
 				patch 'bookmark', on: :member
 			end
-			# resources :orders
 		end
 
 		resources :projects do
@@ -21,7 +20,7 @@ ZerticaConnect::Application.routes.draw do
 		  resources :orders
 		end
 
-		resources :orders do
+		resources :orders, :except => [:new, :create, :edit, :update] do
 			member do
 				patch 'estimate'
 				patch 'pay' 
@@ -42,16 +41,17 @@ ZerticaConnect::Application.routes.draw do
 
 		resources :projects do
 			resources :project_files, except: [:edit, :update]
-			# resources :orders
-			resources :orders#, :only => [:new, :create]
+			resources :orders
 		end
 
-		resources :orders, :except => [:new, :create] do
+		resources :orders, :except => [:new, :create, :edit, :update] do
 			patch 'pay', on: :member # probably not needed, part of payment system
 		end
 
 		root to: 'projects#index', as: :user_root
 	end
+
+	match 'order_confirm_payment' => 'orders#confirm_payment', :as => :order_confirm_payment, :via => :get
 
 	root to: 'home#index', as: :root
 end

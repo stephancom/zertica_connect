@@ -1,9 +1,26 @@
 class Order < ActiveRecord::Base
 	ORDER_TYPES = %w(CadOrder PrintOrder)
+
+	def cad_order?
+		order_type == 'CadOrder'
+	end
+	def print_order?
+		!cad_order?
+	end
+	def human_order_type
+		cad_order? ? 'CAD Order' : 'Print Order'
+	end
+
 	CARRIERS = [:fedex, :usps, :ups, :other]
 
 	belongs_to :project
 	has_one :user, through: :project
+
+	# TODO
+	# assure project_files belong to project
+	has_and_belongs_to_many :project_files
+
+	has_and_belongs_to_many :shippable_files, class_name: 'ProjectFile', join_table: 'orders_shippable_files'
 
 	validates :title, presence: true
 	validates :order_type, presence: true, inclusion: { in: ORDER_TYPES }
@@ -11,16 +28,12 @@ class Order < ActiveRecord::Base
 	validates :price, numericality: { greater_than: 0 }, allow_nil: true
 	validates :project_files, presence: true
 
+	# TODO
+	# validate payment confirmation correct if paid by user?
+	# validate tracking number correct format for carrier if print order?
+
 	delegate :title, to: :project, prefix: true
 	delegate :name, to: :user, prefix: true
-
-	# TODO
-	has_and_belongs_to_many :project_files
-	# TODO
-	# validate project_files belong to project
-	# TODO
-	# validate has project_files
-	# validates :project_files, presence: true
 
 	include Stateflow
 
@@ -129,9 +142,14 @@ class Order < ActiveRecord::Base
 		!confirmation.blank?
 	end
 
+	# if this is a cad order, make sure shippable files have been attached
+	# for a print order, make sure the tracking number is not blank
 	def shippable?
-		!tracking_number.blank?
-		# TODO if cad order, check for shippable files attached
+		if cad_order?
+			shippable_files.any?
+		else
+			!tracking_number.blank?
+		end
 	end
 end
 

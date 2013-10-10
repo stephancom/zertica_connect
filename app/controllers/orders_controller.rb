@@ -1,59 +1,21 @@
 class OrdersController < ApplicationController
   include ActionView::Helpers::NumberHelper
 
-  before_filter :load_project
-  # load_resource :project
-  # load_and_authorize_resource :user
-  load_and_authorize_resource :order, through: :project, shallow: true
+  before_filter :load_project, except: :confirm_payment
+  load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
 
-  # GET /orders
-  # GET /orders.xml
-  def index
-    # @orders = Order.all
-    respond_with(@orders)
-  end
-
-  # GET /orders/1
-  # GET /orders/1.xml
-  def show
-    # @order = Order.find(params[:id])
-    respond_with(@order)
-  end
-
-  # GET /orders/new
-  # GET /orders/new.xml
-  def new
-    # @order = Order.new
-    respond_with(@order)
-  end
-
-  # GET /orders/1/edit
-  def edit
-    # @order = Order.find(params[:id])
-  end
-
-  # POST /orders
-  # POST /orders.xml
   def create
-    # @order = Order.new(params[:order])
-    # throw @project.orders.new(params[:order])
     @order = @project.orders.new(params[:order])
     flash[:notice] = 'Order was successfully created.' if @order.save
     respond_with(@project, @order)
   end
 
-  # PUT /orders/1
-  # PUT /orders/1.xml
   def update
-    # @order = Order.find(params[:id])
     flash[:notice] = 'Order was successfully updated.' if @order.update(params[:order])
     respond_with(@order)
   end
 
-  # DELETE /orders/1
-  # DELETE /orders/1.xml
   def destroy
-    # @order = Order.find(params[:id])
     @order.destroy
     respond_with(@order)
   end
@@ -62,7 +24,7 @@ class OrdersController < ApplicationController
     if @order.update(params[:order]) and @order.estimate!
       flash[:notice] = "Estimate of #{number_to_currency @order.price} submitted to client #{@order.user_name}"
     else
-      flash[:notice] = 'Estimate failed'
+      flash[:error] = 'Estimate failed'
     end
     respond_with @order
   end
@@ -71,9 +33,21 @@ class OrdersController < ApplicationController
     if @order.update(params[:order]) and @order.pay!
       flash[:notice] = "Payment #{number_to_currency @order.price} tendered #{@order.confirmation}"
     else
-      flash[:notice] = 'Payment failed'
+      flash[:error] = 'Payment failed'
     end
     respond_with @order
+  end
+
+  def confirm_payment
+    @result = Braintree::TransparentRedirect.confirm(request.query_string)
+    @order = Order.find(@result.transaction.custom_fields[:order_id]) if @result 
+    if @result && @result.success?
+      flash[:notice] = "Payment #{number_to_currency @result.transaction.amount} succeeded" if @order.update(confirmation: @result.transaction.id) and @order.pay!
+    else
+      flash[:error] = 'Payment failed'
+    end
+    render :show
+    # respond_with @order
   end
 
   def complete
@@ -107,12 +81,18 @@ private
       params[:order].permit(:price)
     when 'pay'
       params[:order].permit(:confirmation)
+    when 'confirm_payment'
+      params.require(:bt_message) # special case - braintree response
     when 'complete'
       params[:order].permit()
     when 'ship'
-      params[:order].permit(:carrier, :tracking_number)
+      params[:order].permit(:carrier, :tracking_number, shippable_file_ids: [])
     else      
-      params[:order].permit(:title, :description, project_file_ids: [])
+      if current_admin
+        params[:order].permit(:title, :description, :price, project_file_ids: [])
+      else
+        params[:order].permit(:title, :description, project_file_ids: [])
+      end
     end
     # TODO allow carrier/tracking number/shipping files if admin and state completed
   end
