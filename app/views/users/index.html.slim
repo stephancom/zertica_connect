@@ -15,4 +15,4 @@ table.table.table-striped
         td= link_to user.name, user if can? :show, user
         td= user.email
         td= user.created_at.to_date
-        td= link_to t('.destroy', :default => t("helpers.links.destroy")), user_path(user), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger' if can? :destroy, user
+        td= link_to t('.destroy', :default => t("helpers.links.destroy")), user_path(user), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, user
