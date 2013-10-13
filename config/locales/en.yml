@@ -26,3 +26,16 @@ en:
   users:
     index:
       confirm: "Are you sure?  This will also destroy ALL projects and files associated with the user!!!"
+  order_notifications:
+    new_order:
+      subject: "A new order has been received"
+    estimate:
+      subject: "Your estimate is ready"
+    thank_you:
+      subject: "Thank you for your payment"
+    paid:
+      subject: "An order has been paid"
+    complete:
+      subject: "Your order is complete"
+    shipped:
+      subject: "Your order has been shipped"
