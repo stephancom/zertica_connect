@@ -146,7 +146,6 @@ ActiveRecord::Schema.define(version: 20131013122228) do
     t.string   "name"
     t.boolean  "email_messages",         default: false, null: false
     t.boolean  "email_estimate",         default: true,  null: false
-    t.boolean  "email_production",       default: true,  null: false
     t.boolean  "email_complete",         default: true,  null: false
     t.boolean  "email_shipped",          default: true,  null: false
   end
