@@ -3,12 +3,6 @@ class OrderNotifications < ActionMailer::Base
 
   # subject lines are set in the i18n file, en.yml
 
-  def new_order(order)
-    @order = order
-
-    mail to: Admin.pluck(:email)
-  end
-
   def estimate(order)
     @order = order
 

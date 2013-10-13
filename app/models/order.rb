@@ -35,8 +35,6 @@ class Order < ActiveRecord::Base
 	delegate :title, to: :project, prefix: true
 	delegate :name, to: :user, prefix: true
 
-	after_create :notify_new_order
-
 	include Stateflow
 
 	#     _        _                       _    _          
@@ -114,12 +112,8 @@ class Order < ActiveRecord::Base
 	# | ' \/ _ \  _| |  _| / _/ _` |  _| / _ \ ' \(_-<
 	# |_||_\___/\__|_|_| |_\__\__,_|\__|_\___/_||_/__/
 
-	def notify_new_order
-		OrderNotifications.new_order(self).deliver
-	end
-
 	def notify_estimate
-		OrderNotifications.estimate(self).deliver
+		OrderNotifications.estimate(self).deliver if user.email_estimate
 	end
 
 	def notify_paid
@@ -128,11 +122,11 @@ class Order < ActiveRecord::Base
 	end
 
 	def notify_complete
-		OrderNotifications.complete(self).deliver
+		OrderNotifications.complete(self).deliver if user.email_complete
 	end
 
 	def notify_shipped
-		OrderNotifications.shipped(self).deliver
+		OrderNotifications.shipped(self).deliver if user.email_shipped
 	end
                                                 
 	#     _        _                        _ _ _   _             
