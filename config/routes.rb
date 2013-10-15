@@ -1,7 +1,7 @@
 ZerticaConnect::Application.routes.draw do	
 
 	devise_for :admins, :controllers => {:registrations => "admin_registrations"}
-	devise_for :users, :controllers => {:registrations => "registrations"}
+	devise_for :users, :controllers => {:registrations => "registrations", :omniauth_callbacks => "users/omniauth_callbacks" }
 
 	authenticated :admin do
 		resources :active_chats, except: [:edit, :update, :new]
