@@ -4,10 +4,6 @@ class OrdersController < ApplicationController
   before_filter :load_project, except: :confirm_payment
   load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
 
-  def new
-    @order.project_files.build(project: @project)
-  end
-
   def show
     @project ||= @order.project
   end
