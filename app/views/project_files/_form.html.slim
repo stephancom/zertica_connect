@@ -1,7 +1,4 @@
 = simple_form_for [@project, @project_file] do |f|
   = f.error_notification
-  = f.filepicker_field :url, dragdrop: true, drag_class: :picker_drag
-  = f.input :filename, as: :hidden
-  = f.input :size, as: :hidden
-  = f.input :mimetype, as: :hidden
+  = render 'fields', f: f
   = f.button :submit

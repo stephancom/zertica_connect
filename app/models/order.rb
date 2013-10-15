@@ -19,8 +19,10 @@ class Order < ActiveRecord::Base
 	# TODO
 	# assure project_files belong to project
 	has_and_belongs_to_many :project_files
+	accepts_nested_attributes_for :project_files
 
 	has_and_belongs_to_many :shippable_files, class_name: 'ProjectFile', join_table: 'orders_shippable_files'
+	accepts_nested_attributes_for :shippable_files
 
 	validates :title, presence: true
 	validates :order_type, presence: true, inclusion: { in: ORDER_TYPES }
