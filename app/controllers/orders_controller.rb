@@ -3,24 +3,17 @@ class OrdersController < ApplicationController
 
   before_filter :load_project, except: :confirm_payment
   load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
-
-  def new
-    @order.project_files.build(project: @project)
-  end
-
-  def show
-    @project ||= @order.project
-  end
+  before_filter :load_project_from_order, except: :confirm_payment
 
   def create
     @order = @project.orders.new(params[:order])
     flash[:notice] = 'Order was successfully created.' if @order.save
-    respond_with(@project, @order)
+    respond_with @project, @order
   end
 
   def update
     flash[:notice] = 'Order was successfully updated.' if @order.update(params[:order])
-    respond_with(@project, @order)
+    respond_with @project, @order
   end
 
   def destroy
@@ -34,7 +27,7 @@ class OrdersController < ApplicationController
     else
       flash[:error] = 'Estimate failed'
     end
-    respond_with @order
+    respond_with @project, @order
   end
 
   def pay
@@ -43,7 +36,7 @@ class OrdersController < ApplicationController
     else
       flash[:error] = 'Payment failed'
     end
-    respond_with @order
+    respond_with @project, @order
   end
 
   def confirm_payment
@@ -59,7 +52,7 @@ class OrdersController < ApplicationController
 
   def complete
     flash[:notice] = "Order #{@order.title} completed!" if @order.complete!
-    respond_with @order
+    respond_with @project, @order
   end
 
   def ship
@@ -69,12 +62,17 @@ class OrdersController < ApplicationController
     else
       flash[:notice] = 'Shipment failed'
     end
-    respond_with @order
+    respond_with @project, @order
   end
 
 private
+  # this one gets done first, for when you've got a nested path
   def load_project
     @project ||= Project.find(params[:project_id]) if params.has_key? :project_id
+  end
+  # and this one gets done after, in case you're in a shallow path.
+  # there's probably a better, less redundant way to do this
+  def load_project_from_order
     @project ||= @order.project if @order
   end
 

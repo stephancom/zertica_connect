@@ -7,7 +7,7 @@
         = f.input :order_type, collection: Order::ORDER_TYPES, as: :radio_buttons if @order.new_record?
 
         = f.association :project_files, collection: @project.project_files, as: :check_boxes
-        = f.simple_fields_for :project_files do |pf|
+        = f.simple_fields_for :project_files, @order.project_files.build(project: @project) do |pf|
             = pf.association :project, as: :hidden
             .offset1= render 'project_files/fields', f: pf
         br
