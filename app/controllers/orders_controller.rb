@@ -3,10 +3,7 @@ class OrdersController < ApplicationController
 
   before_filter :load_project, except: :confirm_payment
   load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
-
-  def show
-    @project ||= @order.project
-  end
+  before_filter :load_project_from_order, except: :confirm_payment
 
   def create
     @order = @project.orders.new(params[:order])
@@ -69,8 +66,13 @@ class OrdersController < ApplicationController
   end
 
 private
+  # this one gets done first, for when you've got a nested path
   def load_project
     @project ||= Project.find(params[:project_id]) if params.has_key? :project_id
+  end
+  # and this one gets done after, in case you're in a shallow path.
+  # there's probably a better, less redundant way to do this
+  def load_project_from_order
     @project ||= @order.project if @order
   end
 
