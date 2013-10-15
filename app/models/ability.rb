@@ -21,7 +21,7 @@ class Ability
                 can [:show, :update], User, id: user.id  # user can always see their own account
                 can :manage, [Project, Message], user_id: user.id
                 can :manage, ProjectFile, :project => { :user_id => user.id }
-                can [:index, :show, :new, :create], Order, project: {user_id: user.id }
+                can [:index, :show, :new, :create, :update], Order, project: {user_id: user.id }
                 can :pay, Order, project: {user_id: user.id }, state: 'estimated'
                 # TODO
                 # cannot [:edit, :update, :destroy], Order, state: (Order.available_states - ['submitted'])

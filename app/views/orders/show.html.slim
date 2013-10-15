@@ -12,6 +12,13 @@
   .span10.offset1
     h4 Associated files
     = render 'project_files/table', collection: @order.project_files
+    - if @project and @order and can?(:update, @project)
+      = simple_form_for [@project, @order], :html => { :class => "form-horizontal" }, wrapper: :minimal  do |f|
+        = f.error_notification
+        = f.simple_fields_for :project_files, @order.project_files.build(project: @project) do |pf|
+            = pf.association :project, as: :hidden
+            .offset1= render 'project_files/fields', f: pf
+        .offset1= f.button :submit, 'Add file', :class => 'btn_primary'
 
 .well.well-sm
   .row-fluid
@@ -61,7 +68,12 @@
       h3 ship:
     .span8
       = simple_form_for @order, url: [:ship, @order], :html => { :class => "form-horizontal" } do |f|
-        .form-inputs= render 'ship_fields', f: f, project: @order.project
+        .form-inputs
+          = render 'ship_fields', f: f, project: @order.project
+          = f.simple_fields_for :shippable_files, @order.shippable_files.build(project: @project) do |pf|
+            = pf.association :project, as: :hidden
+            .offset1= render 'project_files/fields', f: pf
+
         .form-actions= f.button :submit, 'Ship', :class => 'btn-primary'
 
 - if @order.shipped?
@@ -70,6 +82,14 @@
       .span10.offset1
         h4 Shipped Files: 
         = render 'project_files/table', collection: @order.shippable_files
+        - if current_admin and @project and @order and can?(:update, @project)
+          = simple_form_for [@project, @order], :html => { :class => "form-horizontal" }, wrapper: :minimal  do |f|
+            = f.error_notification
+            = f.simple_fields_for :shippable_files, @order.shippable_files.build(project: @project) do |pf|
+                = pf.association :project, as: :hidden
+                .offset1= render 'project_files/fields', f: pf
+            .offset1= f.button :submit, 'Add shipping file', :class => 'btn_primary'
+
     - else
       .span4
         h3 shipped:

@@ -19,13 +19,11 @@ table.table.table-striped
   - if @project and @project_file
 	  tfoot
 	    tr
-	      = simple_form_for [@project, @project_file] do |f|
-	        td
-	        td
-	          = f.error_notification
-	          = f.filepicker_field :url, dragdrop: true, drag_class: :picker_drag
-	          = f.input :filename, as: :hidden
-	          = f.input :size, as: :hidden
-	          = f.input :mimetype, as: :hidden
-	        td= f.button :submit
-	        td
+        td
+        td
+  	      = simple_form_for [@project, @project_file], wrapper: :minimal do |f|
+            = f.error_notification
+            = render 'project_files/fields', f: f
+            = f.button :submit
+        td
+        td

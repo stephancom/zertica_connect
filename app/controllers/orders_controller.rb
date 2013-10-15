@@ -4,6 +4,14 @@ class OrdersController < ApplicationController
   before_filter :load_project, except: :confirm_payment
   load_and_authorize_resource :order, through: :project, shallow: true, except: :confirm_payment
 
+  def new
+    @order.project_files.build(project: @project)
+  end
+
+  def show
+    @project ||= @order.project
+  end
+
   def create
     @order = @project.orders.new(params[:order])
     flash[:notice] = 'Order was successfully created.' if @order.save
@@ -12,7 +20,7 @@ class OrdersController < ApplicationController
 
   def update
     flash[:notice] = 'Order was successfully updated.' if @order.update(params[:order])
-    respond_with(@order)
+    respond_with(@project, @order)
   end
 
   def destroy
@@ -46,8 +54,7 @@ class OrdersController < ApplicationController
     else
       flash[:error] = 'Payment failed'
     end
-    render :show
-    # respond_with @order
+    redirect_to [@project, @order]
   end
 
   def complete
@@ -56,6 +63,7 @@ class OrdersController < ApplicationController
   end
 
   def ship
+    @order.shippable_files.build(project: @project)
     if @order.update(params[:order]) and @order.ship!
       flash[:notice] = "Order #{@order.title} shipped via #{@order.carrier} tracking #{@order.tracking_number}"
     else
@@ -74,9 +82,9 @@ private
     case action_name
     when 'create'
       if current_admin
-        params[:order].permit(:order_type, :title, :description, :price, project_file_ids: [])
+        params[:order].permit(:order_type, :title, :description, :price, project_file_ids: [], project_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
       else
-        params[:order].permit(:order_type, :title, :description, project_file_ids: [])
+        params[:order].permit(:order_type, :title, :description, project_file_ids: [], project_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
       end
     when 'estimate'
       params[:order].permit(:price)
@@ -87,12 +95,12 @@ private
     when 'complete'
       params[:order].permit()
     when 'ship'
-      params[:order].permit(:carrier, :tracking_number, shippable_file_ids: [])
-    else      
+      params[:order].permit(:carrier, :tracking_number, shippable_file_ids: [], shippable_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
+    else
       if current_admin
-        params[:order].permit(:title, :description, :price, project_file_ids: [])
+        params[:order].permit(:title, :description, :price, project_file_ids: [], project_files_attributes: [:project_id, :url, :filename, :size, :mimetype], shippable_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
       else
-        params[:order].permit(:title, :description, project_file_ids: [])
+        params[:order].permit(:title, :description, project_file_ids: [], project_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
       end
     end
     # TODO allow carrier/tracking number/shipping files if admin and state completed
