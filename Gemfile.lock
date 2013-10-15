@@ -87,6 +87,8 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    faraday (0.8.8)
+      multipart-post (~> 1.2.0)
     faye (0.8.9)
       cookiejar (>= 0.3.0)
       em-http-request (>= 0.3.0)
@@ -120,9 +122,11 @@ GEM
     guard-rspec (2.5.4)
       guard (>= 1.1)
       rspec (~> 2.11)
+    hashie (2.0.5)
     high_voltage (1.2.4)
     hike (1.2.3)
     http_parser.rb (0.6.0.beta.2)
+    httpauth (0.2.0)
     hub (1.10.6)
     i18n (0.6.5)
     jbuilder (1.5.1)
@@ -135,6 +139,8 @@ GEM
       railties (>= 3.1.0)
       turbolinks
     json (1.8.0)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     launchy (2.3.0)
       addressable (~> 2.3)
     less (2.4.0)
@@ -155,6 +161,21 @@ GEM
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.0)
+    multipart-post (1.2.0)
+    oauth2 (0.8.1)
+      faraday (~> 0.8)
+      httpauth (~> 0.1)
+      jwt (~> 0.1.4)
+      multi_json (~> 1.0)
+      rack (~> 1.2)
+    omniauth (1.1.4)
+      hashie (>= 1.2, < 3)
+      rack
+    omniauth-facebook (1.4.1)
+      omniauth-oauth2 (~> 1.1.0)
+    omniauth-oauth2 (1.1.1)
+      oauth2 (~> 0.8.0)
+      omniauth (~> 1.0)
     orm_adapter (0.4.0)
     pg (0.16.0)
     polyamorous (0.6.4)
@@ -307,6 +328,8 @@ DEPENDENCIES
   jquery-turbolinks
   less-rails
   letter_opener
+  omniauth
+  omniauth-facebook
   pg
   private_pub
   quiet_assets

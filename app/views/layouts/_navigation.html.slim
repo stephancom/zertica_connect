@@ -25,5 +25,7 @@
             li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
           - else
             li= link_to 'Login', new_user_session_path
+            li= link_to user_omniauth_authorize_path(:facebook), data: {toggle: 'tooltip'}, title: "Sign in with Facebook" do
+              i.icon-facebook-sign.icon-2x
             li= link_to 'Sign up', new_user_registration_path
             li= link_to 'Admin', new_admin_session_path
