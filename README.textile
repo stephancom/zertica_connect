@@ -13,6 +13,8 @@ heroku domains:add zertica.com
 git push heroku master
 heroku run rake db:migrate
 
+h4. Faye
+
 You also need to set up a second server for Faye.  Instructions may be found here
 
 http://joshcrews.com/blog/2013/06/07/running-private-pub-slash-faye-server-on-heroku/
@@ -26,6 +28,8 @@ change settings in config/private_pub.yml in BOTH the faye and the connect app
 
 git commit -a -m 'update config'
 git push heroku master
+
+h4. Ink Filepicker
 
 also, create your desired bucket and configure your keys for Ink Filepicker through Heroku
 
