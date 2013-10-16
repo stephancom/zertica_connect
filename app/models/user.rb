@@ -27,9 +27,9 @@ class User < ActiveRecord::Base
 			# if you've never been notified, or this message has a higher id than the last one you were notified of 
 			hasnt_been_notified = (last_notified_message.nil? or (last_notified_message.id < last_message.id)) 
 			if hasnt_seen_message and hasnt_been_notified 
-				puts "Notifying #{self.name}"
 				MessageNotifications.new_message(last_message).deliver
 				update(last_notified_message: last_message)
+				puts "Notifying #{self.name} of #{last_message.id}"
 			end
 		end
 	end
