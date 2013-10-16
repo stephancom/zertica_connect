@@ -3,7 +3,6 @@
 - form_path = current_admin ? [user, message] : message
 
 = minimal_form_for form_path, :remote => true do |f|
-  = f.error_notification
   = f.input :body, placeholder: 'Start typing here, press enter to send'
   .row-fluid
     .span9.offset3
