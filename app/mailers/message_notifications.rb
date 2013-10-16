@@ -6,6 +6,6 @@ class MessageNotifications < ActionMailer::Base
   def new_message(message)
     @message = message
 
-    mail to: message.user.email
+    mail to: @message.user.email
   end
 end
