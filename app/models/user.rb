@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
 	# should be called from a rake task via cron
 	def notify_if_new_message
-		unless messages.empty? # if there are any messages		
+		unless received_messages.empty? # if there are any messages		
 			last_message = received_messages.last
 			puts "checking on #{last_message.inspect}"
 
