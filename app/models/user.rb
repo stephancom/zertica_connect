@@ -7,9 +7,31 @@ class User < ActiveRecord::Base
 	has_many :messages, dependent: :destroy
 	has_many :active_chats, dependent: :destroy
 	has_many :orders, through: :projects
+	belongs_to :last_notified_message, class_name: 'Message'
 
 	def message_channel
 		"/messages/new/#{id}"
+	end
+
+	def received_messages
+		messages.where('admin_id IS NOT NULL')
+	end
+
+	# should be called from a rake task via cron
+	def notify_if_new_message
+		unless messages.empty? # if there are any messages		
+			last_message = received_messages.last
+
+			# if you've never seen messages, or the last created one was later than the last time you've seen messages
+			hasnt_seen_message = (last_saw_messages_at.nil? or (last_message.created_at > last_saw_messages_at))
+			# if you've never been notified, or this message has a higher id than the last one you were notified of 
+			hasnt_been_notified = (last_notified_message.nil? or (last_notified_message.id < last_message.id)) 
+			if hasnt_seen_message and hasnt_been_notified 
+				puts "Notifying #{self.name}"
+				MessageNotifications.new_message(last_message).deliver
+				update(last_notified_message: last_message)
+			end
+		end
 	end
 
 	def first_name

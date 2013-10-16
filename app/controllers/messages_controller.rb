@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
 
   before_filter :get_user
   before_filter :new_message, only: :index
+  before_filter :update_last_saw_messages_at, only: [:index, :create], if: :current_user
 
   def index
     respond_with(@messages)
@@ -20,6 +21,10 @@ class MessagesController < ApplicationController
   end
 
   private
+
+  def update_last_saw_messages_at
+    current_user.update(last_saw_messages_at: Time.now)
+  end
 
   def get_user
     @user = User.find(params[:user_id]) if params.has_key? :user_id
