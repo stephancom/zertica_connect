@@ -21,7 +21,6 @@ class User < ActiveRecord::Base
 	def notify_if_new_message
 		unless received_messages.empty? # if there are any messages		
 			last_message = received_messages.last
-			puts "checking on #{last_message.inspect}"
 
 			# if you've never seen messages, or the last created one was later than the last time you've seen messages
 			hasnt_seen_message = (last_saw_messages_at.nil? or (last_message.created_at > last_saw_messages_at))
