@@ -25,6 +25,7 @@ class Ability
                 can :pay, Order, project: {user_id: user.id }, state: 'estimated'
                 # TODO
                 # cannot [:edit, :update, :destroy], Order, state: (Order.available_states - ['submitted'])
+                can :ring, :bell
             end
         end
 

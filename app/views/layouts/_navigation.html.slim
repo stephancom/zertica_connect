@@ -17,12 +17,17 @@
             li= link_to 'Orders', orders_path if can? :index, Order
             li= link_to "Account #{current_admin.name}", edit_admin_registration_path
             li= link_to 'Logout', destroy_admin_session_path, :method=>'delete'
+            li
+              = subscribe_to '/bell/ring'
+              = audio_tag 'bell.mp3', id: :admin_bell
           - elsif user_signed_in?
             li= link_to 'Projects', projects_path if can? :index, Project
             li= link_to 'Messages', messages_path if can? :index, Message
             li= link_to 'Orders', orders_path if can? :index, Order
             li= link_to "Account #{current_user.name}", edit_user_registration_path
             li= link_to 'Logout', destroy_user_session_path, :method=>'delete'
+            li= link_to bell_ring_path, data: {toggle: 'tooltip'}, title: "Ring bell", method: :put, remote: true do
+              i.icon-bell-alt.icon-2x
           - else
             li= link_to 'Login', new_user_session_path
             li= link_to user_omniauth_authorize_path(:facebook), data: {toggle: 'tooltip'}, title: "Sign in with Facebook" do

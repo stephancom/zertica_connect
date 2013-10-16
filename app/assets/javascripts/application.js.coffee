@@ -15,5 +15,6 @@
 #= require jquery_ujs
 #= require twitter/bootstrap
 #= require private_pub
+#= require gritter
 #= require turbolinks
 #= require_tree .

@@ -34,6 +34,7 @@ ZerticaConnect::Application.routes.draw do
 	end
 
 	authenticated :user do
+		put "bell/ring"
 
 		resources :messages, except: [:edit, :update, :destroy] do
 			patch 'bookmark', on: :member
