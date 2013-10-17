@@ -13,6 +13,7 @@ setupMessagePanels = ->
 					clicker.trigger('click')
 
 $(document).on 'ready page:load', ->
+	setupMessagePanels()
 	$('#active-chats-tabs a').on 'shown', ->
 		setupMessagePanels()
 	$('#active-chats-tabs a:first').tab('show')
