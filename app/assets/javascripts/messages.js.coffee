@@ -6,7 +6,7 @@ setupMessagePanels = ->
 	$(".messaging_panel").each ->
 		$(this).find('.messages').scrollTop($(this).find('.messages').prop("scrollHeight"))
 		clicker = $(this).find('input[type="submit"]')
-		$(this).find('textarea[name="message[body]"]').on 'keypress', (e) ->
+		$(this).find('textarea[name="message[body]"]').focus().on 'keypress', (e) ->
 			if e.keyCode is 13 and not e.shiftKey
 				e.preventDefault()
 				if not not $(@).val() # don't send if field is empty
