@@ -8,4 +8,10 @@ class MessageNotifications < ActionMailer::Base
 
     mail to: @message.user.email
   end
+
+  def message_from_user(message)
+    @message = message
+
+    mail to: Admin.pluck(:email)
+  end
 end

@@ -15,6 +15,11 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
+  def notify
+    @user.notify_on_next_message = true
+    @user.save
+  end
+
   private
 
   def user_params

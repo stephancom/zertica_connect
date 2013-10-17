@@ -7,3 +7,6 @@
   .row-fluid
     .span9.offset3
       = f.button :submit, class: 'btn right', id: :message_send, data: {disable_with: 'Posting...'}
+  .row-fluid
+    .span9.offset3
+      = render 'users/notify_next', user: user if current_admin
