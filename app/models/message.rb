@@ -20,6 +20,7 @@ class Message < ActiveRecord::Base
 
   def notify_admins
     MessageNotifications.message_from_user(self).deliver
-    user.update_attribute(:notify_on_next_message, false)
+    user.notify_on_next_message = false
+    user.save
   end
 end
