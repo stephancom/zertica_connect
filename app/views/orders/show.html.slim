@@ -20,30 +20,29 @@
             .offset1= render 'project_files/fields', f: pf
         .offset1= f.button :submit, 'Add file', :class => 'btn_primary'
 
-.well.well-sm
-  .row-fluid
-    .span4
-      h2 status:
-    .span8
-      h2= @order.state.capitalize
+.row-fluid
+  .span4
+    h4 status:
+  .span8
+    h4= @order.state.capitalize
 
 .row-fluid
   .span4
-    h3 estimate:
+    h4 estimate:
   .span8
     - if can? :estimate, @order
       = simple_form_for @order, url: [:estimate, @order], :html => { :class => "form-horizontal" } do |f|
         .form-inputs= f.input :price
         .form-actions= f.button :submit, 'Save Estimate', :class => 'btn-primary'
     - elsif @order.submitted?
-      h3 no estimate yet
+      h4 no estimate yet
     - else
-      h3= number_to_currency @order.price
+      h4= number_to_currency @order.price
 
 - if can? :pay, @order
   .row-fluid
     .span4
-      h3 pay now:
+      h4 pay now:
     .span8
       - if current_admin
         = simple_form_for @order, url: [:pay, @order], :html => { :class => "form-horizontal" } do |f|
@@ -55,9 +54,9 @@
 - if @order.payment_processed?
   .row-fluid
     .span4
-      h3 Paid!
+      h4 Paid!
     .span8
-      h3= @order.confirmation
+      h4= @order.confirmation
 
 .row-fluid
   .span8.offset4
@@ -65,7 +64,7 @@
 - if can? :ship, @order
   .row-fluid
     .span4
-      h3 ship:
+      h4 ship:
     .span8
       = simple_form_for @order, url: [:ship, @order], :html => { :class => "form-horizontal" } do |f|
         .form-inputs
@@ -92,7 +91,7 @@
 
     - else
       .span4
-        h3 shipped:
+        h4 shipped:
       .span8
         h4
           | Tracking number: 
