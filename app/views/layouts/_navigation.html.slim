@@ -1,13 +1,13 @@
-.navbar.navbar-fluid-top
+.navbar
   .navbar-inner
-    .container-fluid
+    .container
       a.btn.btn-navbar data-target=".nav-collapse" data-toggle="collapse"
         span.icon-bar
         span.icon-bar
         span.icon-bar
       = link_to "Zertica", root_path, :class => 'brand'
-      .container-fluid.nav-collapse
-        ul.nav
+      .nav-collapse.collapse
+        ul.nav.pull-right
           - if admin_signed_in?
             li.admin
               a Admin:
