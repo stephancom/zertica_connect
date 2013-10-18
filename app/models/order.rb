@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
 		!cad_order?
 	end
 	def human_order_type
-		cad_order? ? 'CAD Order' : 'Print Order'
+		cad_order? ? 'CAD' : 'Print'
 	end
 
 	CARRIERS = [:fedex, :usps, :ups, :other]
