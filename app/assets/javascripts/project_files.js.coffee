@@ -5,10 +5,12 @@
 $(document).on 'ready page:load', ->
 	$('input[type^="filepicker"]').on 'change', (event)->
 		if event.originalEvent.fpfile?
-			$('input[data-filepicker-meta="filename"]').val(event.originalEvent.fpfile.filename)
-			$('input[data-filepicker-meta="size"]').val(event.originalEvent.fpfile.size)
-			$('input[data-filepicker-meta="mimetype"]').val(event.originalEvent.fpfile.mimetype)
+			$(this.form).find('input[data-filepicker-meta="filename"]').val(event.originalEvent.fpfile.filename)
+			$(this.form).find('input[data-filepicker-meta="size"]').val(event.originalEvent.fpfile.size)
+			$(this.form).find('input[data-filepicker-meta="mimetype"]').val(event.originalEvent.fpfile.mimetype)
+			if $(this.form).data('submit-on-pick')
+				this.form.submit()
 		else
-			$('input[data-filepicker-meta="filename"]').val('')
-			$('input[data-filepicker-meta="size"]').val('')
-			$('input[data-filepicker-meta="mimetype"]').val('')
+			$(this.form).find('input[data-filepicker-meta="filename"]').val('')
+			$(this.form).find('input[data-filepicker-meta="size"]').val('')
+			$(this.form).find('input[data-filepicker-meta="mimetype"]').val('')
