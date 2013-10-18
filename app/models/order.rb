@@ -16,6 +16,8 @@ class Order < ActiveRecord::Base
 	belongs_to :project
 	has_one :user, through: :project
 
+	default_scope {where(['state <> ?', 'archived'])}
+
 	# TODO
 	# assure project_files belong to project
 	has_and_belongs_to_many :project_files

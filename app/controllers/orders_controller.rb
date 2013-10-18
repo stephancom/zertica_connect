@@ -65,6 +65,11 @@ class OrdersController < ApplicationController
     respond_with @project, @order
   end
 
+  def archive
+    flash[:notice] = "Order #{@order.title} archived" if @order.archive!
+    respond_with @project    
+  end
+
 private
   # this one gets done first, for when you've got a nested path
   def load_project
@@ -94,6 +99,8 @@ private
       params[:order].permit()
     when 'ship'
       params[:order].permit(:carrier, :tracking_number, shippable_file_ids: [], shippable_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
+    when 'archive'
+      params[:order].permit()
     else
       if current_admin
         params[:order].permit(:title, :description, :price, project_file_ids: [], project_files_attributes: [:project_id, :url, :filename, :size, :mimetype], shippable_files_attributes: [:project_id, :url, :filename, :size, :mimetype])
