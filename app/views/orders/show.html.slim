@@ -88,7 +88,8 @@
     .span8
       h4
         | Tracking number: 
-        = link_to @order.tracking_number, '#'
+        = link_to_if @order.has_tracking_url?, @order.tracking_number, @order.tracking_url
+
 
 .row-fluid
   .span12

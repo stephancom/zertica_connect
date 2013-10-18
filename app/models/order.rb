@@ -11,8 +11,6 @@ class Order < ActiveRecord::Base
 		cad_order? ? 'CAD' : 'Print'
 	end
 
-	CARRIERS = [:fedex, :usps, :ups, :other]
-
 	belongs_to :project
 	has_one :user, through: :project
 
@@ -155,37 +153,36 @@ class Order < ActiveRecord::Base
 			!tracking_number.blank?
 		end
 	end
+
+	# source: http://gummydev.com/regex/
+	CARRIER_REGEXPS = { 	fedex: /\b(1Z ?[0-9A-Z]{3} ?[0-9A-Z]{3} ?[0-9A-Z]{2} ?[0-9A-Z]{4} ?[0-9A-Z]{3} ?[0-9A-Z]|[\dT]\d\d\d ?\d\d\d\d ?\d\d\d)\b/i,
+						usps: /\b(91\d\d ?\d\d\d\d ?\d\d\d\d ?\d\d\d\d ?\d\d\d\d ?\d\d|91\d\d ?\d\d\d\d ?\d\d\d\d ?\d\d\d\d ?\d\d\d\d)\b/i,
+						ups: /\b(1Z ?[0-9A-Z]{3} ?[0-9A-Z]{3} ?[0-9A-Z]{2} ?[0-9A-Z]{4} ?[0-9A-Z]{3} ?[0-9A-Z]|[\dT]\d\d\d ?\d\d\d\d ?\d\d\d)\b/i,
+						other: /.*/}
+	CARRIERS = CARRIER_REGEXPS.keys					
+
+	validates :carrier, inclusion: {in: CARRIERS }, allow_nil: true
+
+	# this would be cute if scope worked, but it doesn't
+	# CARRIER_REGEXS.each_paid do |carrier, regex|
+	# 	validates :tracking_number, format: {with: regex}, {scope: (carrier == carrier.to_s)}
+	# end
+
+	def has_tracking_url?
+		shipped? and print_order? and carrier != 'other'
+	end
+
+	# http://verysimple.com/2011/07/06/ups-tracking-url/
+	def tracking_url
+		case carrier
+		when 'fedex'
+			"http://www.fedex.com/Tracking?action=track&tracknumbers=#{tracking_number}"
+		when 'ups'
+			"http://wwwapps.ups.com/WebTracking/track?track=yes&trackNums=#{tracking_number}"
+		when 'usps'
+			"https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1=#{tracking_number}"
+		else
+			'#'
+		end
+	end
 end
-
-# class CadOrder < Order
-# 	# TODO
-# 	# has_and_belongs_to_many :shipped_files
-
-# 	# validates? has shipped files if state is shipped
-
-# 	def shippable?
-# 		# checks for having at least one shipped file
-# 	end
-# end
-
-# class PrintOrder < Order
-# 	CARRIERS = [:fedex, :usps, :ups, :other]
-
-# 	# validates has carrier/tracking number if state is shipped
-
-# 	# validates carrier
-# 	validates :carrier, inclusion: {in: CARRIERS }
-
-# 	# validates tracking number
-
-# 	# validates :tracking_number, format: {with: /regexp for carrier/}, {scope: (carrier == 'fedex')}
-# 	# and so forth
-
-# 	# DRYer:
-# 	# CARRIER_REGEXPS = {fedex: /nnn/, usps: /mmm/}
-# 	# CARRIERS = CARRIER_REGEXPS.keys
-
-# 	def shippable?
-# 		# check for tracking number
-# 	end
-# end
