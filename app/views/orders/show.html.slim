@@ -4,21 +4,30 @@
     = link_to_if can?(:show, @order.project), @order.project_title, @order.project
   h1 #{@order.human_order_type}: #{@order.title}
 
-- unless @order.description.blank?
-  .row-fluid
-    .span12= @order.description
-
 .row-fluid
-  .span10.offset1
-    h4 Associated files
-    = render 'project_files/table', collection: @order.project_files
-    - if @project and @order and can?(:update, @project)
-      = simple_form_for [@project, @order], :html => { :class => "form-horizontal" }, wrapper: :minimal  do |f|
-        = f.error_notification
-        = f.simple_fields_for :project_files, @order.project_files.build(project: @project) do |pf|
-            = pf.association :project, as: :hidden
-            .offset1= render 'project_files/fields', f: pf
-        .offset1= f.button :submit, 'Add file', :class => 'btn_primary'
+  .span1
+    h5 Description
+  .span5= simple_format @order.description
+  .span6
+    .form-actions.pull-right
+      = link_to 'Mark complete', [:complete, @order], method: :put, :class => 'btn btn-primary' if can? :complete, @order
+      '
+      = link_to 'Archive', archive_order_path(@order), :class => 'btn btn-primary' if can? :archive, @order
+      '
+      = link_to t('.back', :default => t("helpers.links.back")), @order.project, :class => 'btn'
+      '
+      = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_order_path(@order.project, @order), :class => 'btn' if can? :edit, @order
+      '
+      = link_to t('.destroy', :default => t("helpers.links.destroy")), order_path(@order), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, @order
+      '
+      - if @project and @order and can?(:update, @project)
+        = simple_form_for [@project, @order], :html => { :class => "form-horizontal", :data => {:submit_on_pick => true} }, wrapper: :minimal  do |f|
+          = f.error_notification
+          = f.simple_fields_for :project_files, @order.project_files.build(project: @project) do |pf|
+              = pf.association :project, as: :hidden
+              .offset1= render 'project_files/fields', f: pf, dragdrop: false
+          .hide= f.button :submit, 'Add file', :class => 'btn_primary'
+
 
 .row-fluid
   .span4
@@ -58,9 +67,6 @@
     .span8
       h4= @order.confirmation
 
-.row-fluid
-  .span8.offset4
-
 - if can? :ship, @order
   .row-fluid
     .span4
@@ -75,36 +81,30 @@
 
         .form-actions= f.button :submit, 'Ship', :class => 'btn-primary'
 
-- if @order.shipped?
+- if @order.shipped? and @order.print_order?
   .row-fluid
-    - if @order.cad_order?
-      .span10.offset1
-        h4 Shipped Files: 
-        = render 'project_files/table', collection: @order.shippable_files
-        - if current_admin and @project and @order and can?(:update, @project)
-          = simple_form_for [@project, @order], :html => { :class => "form-horizontal" }, wrapper: :minimal  do |f|
-            = f.error_notification
-            = f.simple_fields_for :shippable_files, @order.shippable_files.build(project: @project) do |pf|
-                = pf.association :project, as: :hidden
-                .offset1= render 'project_files/fields', f: pf
-            .offset1= f.button :submit, 'Add shipping file', :class => 'btn_primary'
+    .span4
+      h4 shipped:
+    .span8
+      h4
+        | Tracking number: 
+        = link_to @order.tracking_number, '#'
 
-    - else
-      .span4
-        h4 shipped:
-      .span8
-        h4
-          | Tracking number: 
-          = link_to @order.tracking_number, '#'
-
-.form-actions
-  = link_to 'Mark complete', [:complete, @order], method: :put, :class => 'btn btn-primary' if can? :complete, @order
-  '
-  = link_to 'Archive', archive_order_path(@order), :class => 'btn btn-primary' if can? :archive, @order
-  '
-  = link_to t('.back', :default => t("helpers.links.back")), @order.project, :class => 'btn'
-  '
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_order_path(@order.project, @order), :class => 'btn' if can? :edit, @order
-  '
-  = link_to t('.destroy', :default => t("helpers.links.destroy")), order_path(@order), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, @order
-
+.row-fluid
+  .span12
+    ul.nav.nav-tabs
+      li.active= link_to 'Associated Files', '#files', :data => {:toggle => :tab}
+      - if @order.shipped? and @order.cad_order?
+        li= link_to 'Shipped Files', '#shipped', :data => {:toggle => :tab}
+    .tab-content
+      .tab-pane.active#files= render 'project_files/table', collection: @order.project_files
+      - if @order.shipped? and @order.cad_order?
+        .tab-pane#shipped
+          = render 'project_files/table', collection: @order.shippable_files
+          - if current_admin and @project and @order and can?(:update, @project)
+            = simple_form_for [@project, @order], :html => { :class => "form-horizontal", :data => {:submit_on_pick => true} }, wrapper: :minimal  do |f|
+              = f.error_notification
+              = f.simple_fields_for :shippable_files, @order.shippable_files.build(project: @project) do |pf|
+                  = pf.association :project, as: :hidden
+                  .offset1= render 'project_files/fields', f: pf, dragdrop: false
+              .hide= f.button :submit, 'Add shipping file', :class => 'btn_primary'
