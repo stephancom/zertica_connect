@@ -27,8 +27,8 @@
 .row-fluid
   .span12
     ul.nav.nav-tabs
-      li.active= link_to 'Orders', "#orders", :data => {:toggle => :tab}
-      li= link_to 'Files', "#files", :data => {:toggle => :tab}
+      li.active= link_to 'Files', "#files", :data => {:toggle => :tab}
+      li= link_to 'Orders', "#orders", :data => {:toggle => :tab}
     .tab-content
-      .tab-pane.active#orders= render 'orders/table', collection: @project.orders
-      .tab-pane#files= render 'project_files/table', collection: @project.project_files
+      .tab-pane.active#files= render 'project_files/table', collection: @project.project_files
+      .tab-pane#orders= render 'orders/table', collection: @project.orders
