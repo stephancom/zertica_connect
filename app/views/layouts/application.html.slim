@@ -40,4 +40,8 @@ html lang="en"
             = yield
     
       footer
-        p &copy; Zertica 2013
+        .container
+          ul.inline.pull-right
+            li &copy; Zertica 2013
+            li= link_to 'Terms of Service', '#'
+            li= link_to 'Privacy Policy', '#'
