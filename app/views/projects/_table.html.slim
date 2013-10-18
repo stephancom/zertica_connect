@@ -2,17 +2,17 @@
 table.table.table-striped
   thead
     tr
+      th= model_class.human_attribute_name(:title)
       - if current_admin
         th= model_class.human_attribute_name(:user)
-      th= model_class.human_attribute_name(:title)
       th= model_class.human_attribute_name(:deadline)
       th=t '.actions', :default => t("helpers.actions")
   tbody
     - collection.each do |project|
       tr
+        td = link_to_if can?(:show, project), project.title, project
         - if current_admin
           td = link_to_if can?(:show, project.user), project.user_name, project.user
-        td = link_to_if can?(:show, project), project.title, project
         td = project.deadline
         td 
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_path(project), :class => :btn if can? :edit, project
