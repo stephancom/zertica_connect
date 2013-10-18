@@ -11,6 +11,7 @@ table.table.table-striped
       th=t '.actions', :default => t("helpers.actions")
   tbody
     - collection.each do |order|
+      - next if order.new_record?
       tr
         td = link_to_if can?(:show, order), order.title, order
         td = order.human_order_type
