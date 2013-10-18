@@ -60,7 +60,7 @@ class OrdersController < ApplicationController
     if @order.update(params[:order]) and @order.ship!
       flash[:notice] = "Order #{@order.title} shipped via #{@order.carrier} tracking #{@order.tracking_number}"
     else
-      flash[:notice] = 'Shipment failed'
+      flash[:error] = 'Shipment failed'
     end
     respond_with @project, @order
   end
