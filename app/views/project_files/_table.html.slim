@@ -21,9 +21,9 @@ table.table.table-striped
 	    tr
         td
         td
-  	      = simple_form_for [@project, @project_file], wrapper: :minimal do |f|
+  	      = simple_form_for [@project, @project_file], wrapper: :minimal, :html => { :class => "form-horizontal", :data => {:submit_on_pick => true} } do |f|
             = f.error_notification
-            = render 'project_files/fields', f: f
-            = f.button :submit
+            = render 'project_files/fields', f: f, dragdrop: false
+            .hide= f.button :submit
         td
         td
