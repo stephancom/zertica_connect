@@ -13,10 +13,9 @@
 .row-fluid
 	.span1
 		h5 spec
-	.span5
-		= simple_format h(@project.spec)
+	.span5= simple_format h(@project.spec)
 	.span6
-		.form-actions
+		.form-actions.pull-right
 		  = link_to 'Place Order', new_project_order_path(@project), class: 'btn btn-primary' if can?(:create, @project.orders.build)
 		  = link_to t('.back', :default => t("helpers.links.back")), projects_path, :class => 'btn'
 		  '
