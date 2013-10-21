@@ -9,7 +9,15 @@
     h5 Description
   .span5= simple_format @order.description
   .span6
-    .form-actions.pull-right
+    .pull-right
+      - if @project and @order and can?(:update, @project)
+        = simple_form_for [@project, @order], :html => { :class => "form-horizontal", :data => {:submit_on_pick => true} }, wrapper: :minimal  do |f|
+          = f.error_notification
+          = f.simple_fields_for :project_files, @order.project_files.build(project: @project) do |pf|
+              = pf.association :project, as: :hidden
+              .offset1= render 'project_files/fields', f: pf, dragdrop: false
+          .hide= f.button :submit, 'Add file', :class => 'btn_primary'
+      '
       = link_to 'Mark complete', [:complete, @order], method: :put, :class => 'btn btn-primary' if can? :complete, @order
       '
       = link_to 'Archive', archive_order_path(@order), :class => 'btn btn-primary', :method => :patch if can? :archive, @order
@@ -19,14 +27,6 @@
       = link_to t('.edit', :default => t("helpers.links.edit")), edit_project_order_path(@order.project, @order), :class => 'btn' if can? :edit, @order
       '
       = link_to t('.destroy', :default => t("helpers.links.destroy")), order_path(@order), :method => "delete", :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger' if can? :destroy, @order
-      '
-      - if @project and @order and can?(:update, @project)
-        = simple_form_for [@project, @order], :html => { :class => "form-horizontal", :data => {:submit_on_pick => true} }, wrapper: :minimal  do |f|
-          = f.error_notification
-          = f.simple_fields_for :project_files, @order.project_files.build(project: @project) do |pf|
-              = pf.association :project, as: :hidden
-              .offset1= render 'project_files/fields', f: pf, dragdrop: false
-          .hide= f.button :submit, 'Add file', :class => 'btn_primary'
 
 
 .row-fluid

@@ -1,8 +1,7 @@
 - model_class = Project
-.page-header
-  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+.row-fluid
+	.page-header.span10
+		h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+	.span2= link_to t('.new', :default => t("helpers.links.new")), new_project_path, :class => 'btn btn-primary' if can? :create, Project
 
 = render 'table', collection: @projects
-
-.form-actions
-  = link_to t('.new', :default => t("helpers.links.new")), new_project_path, :class => 'btn btn-primary' if can? :create, Project

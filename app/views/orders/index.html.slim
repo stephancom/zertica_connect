@@ -1,8 +1,7 @@
 - model_class = Order
-.page-header
-  h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+.row-fluid
+	.page-header.span10
+		h1=t '.title', :default => model_class.model_name.human.pluralize.titleize
+	.span2= link_to t('.new', :default => t("helpers.links.new")), new_project_order_path(@project), :class => 'btn btn-primary' if @project
 
 = render 'table', collection: @orders
-
-.form-actions
-  = link_to t('.new', :default => t("helpers.links.new")), new_project_order_path(@project), :class => 'btn btn-primary' if @project
