@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_filter :new_message, only: :show
   
   def update
-    flash[:notice] = 'User was successfully updated.' if @user.update(params[:user])
+    @user.update(params[:user])
     respond_with(@user)
   end
 

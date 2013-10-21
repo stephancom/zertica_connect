@@ -4,12 +4,12 @@ class ProjectsController < ApplicationController
   before_filter :new_project_file, only: :show
 
   def create
-    flash[:notice] = 'Project was successfully created.' if @project.save
+    @project.save
     respond_with(@project)
   end
 
   def update
-    flash[:notice] = 'Project was successfully updated.' if @project.update(params[:project])
+    @project.update(params[:project])
     respond_with(@project)
   end
 

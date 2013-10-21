@@ -15,12 +15,12 @@ class ProjectFilesController < ApplicationController
   end
 
   def create
-    flash[:notice] = 'ProjectFile was successfully created.' if @project_file.save
+    @project_file.save
     respond_with(@project)
   end
 
   def update
-    flash[:notice] = 'ProjectFile was successfully updated.' if @project_file.update(params[:project_file])
+    @project_file.update(params[:project_file])
     respond_with(@project, @project_file)
   end
 

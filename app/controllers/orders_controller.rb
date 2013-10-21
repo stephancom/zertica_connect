@@ -7,12 +7,12 @@ class OrdersController < ApplicationController
 
   def create
     @order = @project.orders.new(params[:order])
-    flash[:notice] = 'Order was successfully created.' if @order.save
+    @order.save
     respond_with @project, @order
   end
 
   def update
-    flash[:notice] = 'Order was successfully updated.' if @order.update(params[:order])
+    @order.update(params[:order])
     respond_with @project, @order
   end
 
@@ -22,18 +22,14 @@ class OrdersController < ApplicationController
   end
 
   def estimate
-    if @order.update(params[:order]) and @order.estimate!
-      flash[:notice] = "Estimate of #{number_to_currency @order.price} submitted to client #{@order.user_name}"
-    else
+    unless @order.update(params[:order]) and @order.estimate!
       flash[:error] = 'Estimate failed'
     end
     respond_with @project, @order
   end
 
   def pay
-    if @order.update(params[:order]) and @order.pay!
-      flash[:notice] = "Payment #{number_to_currency @order.price} tendered #{@order.confirmation}"
-    else
+    unless @order.update(params[:order]) and @order.pay!
       flash[:error] = 'Payment failed'
     end
     respond_with @project, @order
@@ -43,7 +39,7 @@ class OrdersController < ApplicationController
     @result = Braintree::TransparentRedirect.confirm(request.query_string)
     @order = Order.find(@result.transaction.custom_fields[:order_id]) if @result 
     if @result && @result.success?
-      flash[:notice] = "Payment #{number_to_currency @result.transaction.amount} succeeded" if @order.update(confirmation: @result.transaction.id) and @order.pay!
+      @order.update(confirmation: @result.transaction.id) and @order.pay!
     else
       flash[:error] = 'Payment failed'
     end
@@ -51,22 +47,20 @@ class OrdersController < ApplicationController
   end
 
   def complete
-    flash[:notice] = "Order #{@order.title} completed!" if @order.complete!
+    @order.complete!
     respond_with @project, @order
   end
 
   def ship
     @order.shippable_files.build(project: @project)
-    if @order.update(params[:order]) and @order.ship!
-      flash[:notice] = "Order #{@order.title} shipped via #{@order.carrier} tracking #{@order.tracking_number}"
-    else
+    unless @order.update(params[:order]) and @order.ship!
       flash[:error] = 'Shipment failed'
     end
     respond_with @project, @order
   end
 
   def archive
-    flash[:notice] = "Order #{@order.title} archived" if @order.archive!
+    @order.archive!
     respond_with @project    
   end
 
