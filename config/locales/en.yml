@@ -23,6 +23,9 @@ en:
   activerecord:
     models:
       project_file: File
+    attributes:
+      project_file:
+        created_at: "Uploaded on"
   users:
     index:
       confirm: "Are you sure?  This will also destroy ALL projects and files associated with the user!!!"
