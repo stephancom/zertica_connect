@@ -2,6 +2,17 @@ h1. Zertica Connect
 
 h2. Deployment
 
+local dev deployment:
+* clone the repo
+* bundle install
+* cp application.example.yml to application.yml, fill in correct data
+* cp database.example.yml to database.yml, change if needed (probably not needed if you have postgresql running)
+* you may need to "CREATE ROLE zertica_connect WITH SUPERUSER LOGIN;" in postgres unless you edit the database.yml
+* rake db:grate
+* rake db:migrate
+* rake db:seed
+* rails server
+
 To recreate the heroku server named @zertica_connect@, do this:
 
 bc. heroku apps:create zertica_connect
