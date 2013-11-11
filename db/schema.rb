@@ -50,17 +50,6 @@ ActiveRecord::Schema.define(version: 20131017072040) do
   add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
   add_index "admins", ["unlock_token"], name: "index_admins_on_unlock_token", unique: true, using: :btree
 
-  create_table "assets", force: true do |t|
-    t.integer  "project_id",     null: false
-    t.string   "title"
-    t.text     "notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "filepicker_url"
-  end
-
-  add_index "assets", ["project_id"], name: "index_assets_on_project_id", using: :btree
-
   create_table "messages", force: true do |t|
     t.text     "body",                       null: false
     t.integer  "user_id",                    null: false
